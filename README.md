@@ -16,8 +16,10 @@ This is a project for the **Computer Security** course, simulating a secure web 
 
 ## 👨‍🏫 Lecturer
 
-- Mr. Le Giang Thanh
+- M.Sc. Le Giang Thanh
 - Department of Computer Networking, University of Science – VNU-HCM
+
+---
 
 ## 🛠️ Technologies Used
 
