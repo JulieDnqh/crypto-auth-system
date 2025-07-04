@@ -27,6 +27,11 @@ app.get("/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "gui", "signup.html"));
 });
 
+// Route for the home/dashboard page
+app.get("/home", (req, res) => {
+  res.sendFile(path.join(__dirname, "gui", "home.html"));
+});
+
 // Handle login form submission
 app.post("/login", (req, res) => {
   console.log("Login form submitted (UI only):", req.body);

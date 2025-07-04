@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Crypto Auth System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: #004d66;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .navbar a:hover {
+            color: #a0d9ff;
+        }
+        .main-content-wrapper {
+            display: flex;
+            flex: 1;
+            padding: 30px; /* Increased padding around the main content */
+            gap: 30px; /* Increased space between sidebar and main content */
+            align-items: flex-start; /* Align items to the top */
+            min-height: calc(100vh - 90px); /* Ensure it takes up remaining viewport height */
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px 0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* More pronounced shadow */
+            display: flex;
+            flex-direction: column;
+            border-radius: 15px; /* Rounded corners */
+            overflow: hidden; /* Ensures content respects border-radius */
+            flex-shrink: 0; /* Prevent sidebar from shrinking */
+        }
+        .sidebar h2 {
+            font-size: 1.6em; /* Slightly smaller */
+            margin-top: 0;
+            margin-bottom: 25px; /* Reduced margin */
+            color: #3498db; /* Accent color */
+            text-align: center;
+            padding: 0 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar ul li {
+            margin-bottom: 5px; /* Reduced margin */
+        }
+        .sidebar ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 1em; /* Slightly smaller */
+            display: block;
+            padding: 12px 20px; /* Increased padding for better click area */
+            border-radius: 0; /* Remove border-radius for full width */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .sidebar ul li a:hover {
+            background-color: #34495e; /* Darker hover */
+            color: #ffffff;
+        }
+        /* Dropdown styles */
+        .dropdown-btn {
+            background-color: #2c3e50; /* Match sidebar background */
+            color: #ecf0f1;
+            padding: 12px 20px; /* Consistent padding */
+            font-size: 1.05em; /* Slightly larger */
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            border-radius: 0; /* Remove border-radius */
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #34495e; /* Separator */
+        }
+        .dropdown-btn:hover {
+            background-color: #34495e;
+        }
+        .dropdown-btn.active {
+            background-color: #3498db; /* Active color */
+            color: white;
+        }
+        .dropdown-container {
+            display: none;
+            background-color: #34495e; /* Darker background for dropdown items */
+            padding-left: 0; /* Remove padding-left */
+            border-radius: 0;
+            border-bottom: 1px solid #4a627a; /* Subtle separator */
+        }
+        .dropdown-container a {
+            color: #ecf0f1;
+            padding: 10px 20px 10px 30px; /* Indent dropdown items */
+            text-decoration: none;
+            display: block;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+        .dropdown-container a:hover {
+            background-color: #4a627a; /* Lighter hover for items */
+        }
+        .dropdown-btn.active + .dropdown-container {
+            display: block;
+        }
+        .dashboard-main {
+            flex: 1;
+            padding: 40px;
+            background-color: #ffffff;
+            margin: 0; /* Removed margin */
+            border-radius: 15px; /* More rounded corners */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* More pronounced shadow */
+            overflow-y: auto;
+        }
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .welcome-message h2 {
+            color: #004d66;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .welcome-message p {
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.6;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .feature-card {
+            background-color: #e0f7fa;
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .feature-card h3 {
+            color: #00796b;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        .feature-card p {
+            color: #444;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>Crypto Auth Dashboard</h1>
+        <div>
+            <a href="/">Home</a>
+            <a href="/login">Login</a>
+            <a href="/signup">Sign Up</a>
+            <a href="#">Settings</a>
+            <a href="#">Logout</a>
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="sidebar">
+            <h2>Features</h2>
+            <ul>
+                <li>
+                    <button class="dropdown-btn">Account Management</button>
+                    <div class="dropdown-container">
+                        <a href="#" data-content="register-account">Register Account</a>
+                        <a href="#" data-content="login-mfa">Login & MFA</a>
+                        <a href="#" data-content="update-account">Update Account Info</a>
+                        <a href="#" data-content="login-rate-limiting">Login Rate Limiting</a>
+                        <a href="#" data-content="account-recovery">Account Recovery</a>
+                        <a href="#" data-content="account-permissions">Account Permissions</a>
+                    </div>
+                </li>
+                <li>
+                    <button class="dropdown-btn">Key Management</button>
+                    <div class="dropdown-container">
+                        <a href="#" data-content="rsa-key-management">Personal RSA Key Management</a>
+                        <a href="#" data-content="public-key-qr">Public Key QR Code</a>
+                        <a href="#" data-content="search-public-key">Search Public Key</a>
+                        <a href="#" data-content="check-key-status">Check Key Status</a>
+                    </div>
+                </li>
+                <li>
+                    <button class="dropdown-btn">File Operations</button>
+                    <div class="dropdown-container">
+                        <a href="#" data-content="encrypt-file">Encrypt File for Others</a>
+                        <a href="#" data-content="decrypt-file">Decrypt File</a>
+                        <a href="#" data-content="sign-file">Sign File</a>
+                        <a href="#" data-content="verify-signature">Verify Signature</a>
+                        <a href="#" data-content="split-files">Split Large Files</a>
+                        <a href="#" data-content="storage-options">File Storage Options</a>
+                    </div>
+                </li>
+                <li>
+                    <button class="dropdown-btn">System Logs</button>
+                    <div class="dropdown-container">
+                        <a href="#" data-content="security-logging">Security Logging</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dashboard-main" id="dashboard-content">
+            <!-- Initial welcome content -->
+            <div class="welcome-message">
+                <h2>Welcome to the Crypto Auth System!</h2>
+                <p>This platform provides a robust and secure environment for managing your digital identity and assets. Our system is designed with cutting-edge cryptographic techniques to ensure the highest level of security for your data.</p>
+                <p>Explore the features on the left sidebar to get started. From secure key management to encrypted file transfers, we've got you covered.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Secure Key Storage</h3>
+                    <p>Safely generate and store your private and public keys.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Data Encryption</h3>
+                    <p>Encrypt and decrypt your sensitive files with industry-standard algorithms.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Multi-Factor Authentication</h3>
+                    <p>Add an extra layer of security to your account with MFA options.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>User Management</h3>
+                    <p>Admins can manage user accounts and permissions.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Activity Logging</h3>
+                    <p>Monitor all security-related activities and access logs.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Account Recovery</h3>
+                    <p>Secure methods for account and passphrase recovery.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+        const dashboardContent = document.getElementById("dashboard-content");
+
+        const contentMap = {
+            "register-account": "<h3>Register Account</h3><p>Details about registering a new user account.</p>",
+            "login-mfa": "<h3>Login & Multi-Factor Authentication</h3><p>Information on user login and MFA processes.</p>",
+            "update-account": "<h3>Update Account Info</h3><p>Manage your personal information and profile settings.</p>",
+            "login-rate-limiting": "<h3>Login Rate Limiting</h3><p>Details on preventing brute-force attacks and login attempts.</p>",
+            "account-recovery": "<h3>Account Recovery</h3><p>Information on recovering lost accounts or passphrases.</p>",
+            "account-permissions": "<h3>Account Permissions</h3><p>Manage user roles and access levels.</p>",
+            "rsa-key-management": "<h3>Personal RSA Key Management</h3><p>Generate, store, and manage your RSA key pairs.</p>",
+            "public-key-qr": "<h3>Public Key QR Code</h3><p>Generate and scan QR codes for public keys.</p>",
+            "search-public-key": "<h3>Search Public Key</h3><p>Find and retrieve public keys of other users.</p>",
+            "check-key-status": "<h3>Check Key Status</h3><p>View the status and expiration of your cryptographic keys.</p>",
+            "encrypt-file": "<h3>Encrypt File for Others</h3><p>Securely encrypt files for sharing with other users.</p>",
+            "decrypt-file": "<h3>Decrypt File</h3><p>Decrypt files that have been encrypted for you.</p>",
+            "sign-file": "<h3>Sign File</h3><p>Digitally sign files to ensure their authenticity and integrity.</p>",
+            "verify-signature": "<h3>Verify Signature</h3><p>Verify digital signatures on files.</p>",
+            "split-files": "<h3>Split Large Files</h3><p>Information on splitting and rejoining large files for encryption.</p>",
+            "storage-options": "<h3>File Storage Options</h3><p>Details on different file storage and handling options.</p>",
+            "security-logging": "<h3>Security Logging</h3><p>View and manage security logs for all system activities.</p>"
+        };
+
+        dropdownBtns.forEach(btn => {
+            btn.addEventListener("click", function() {
+                // Close all other dropdowns
+                dropdownBtns.forEach(otherBtn => {
+                    if (otherBtn !== this && otherBtn.classList.contains("active")) {
+                        otherBtn.classList.remove("active");
+                        otherBtn.nextElementSibling.style.display = "none";
+                    }
+                });
+
+                // Toggle current dropdown
+                this.classList.toggle("active");
+                const dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        });
+
+        // Handle sidebar link clicks to change main content
+        document.querySelectorAll(".dropdown-container a").forEach(link => {
+            link.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent default link behavior
+                const contentKey = this.dataset.content;
+                if (contentMap[contentKey]) {
+                    dashboardContent.innerHTML = contentMap[contentKey];
+                } else {
+                    dashboardContent.innerHTML = "<h3>Content Not Found</h3><p>The requested content is not available.</p>";
+                }
+            });
+        });
+
+        // Set initial content to a slogan
+        window.addEventListener('DOMContentLoaded', (event) => {
+            dashboardContent.innerHTML = `
+                <div class="welcome-message">
+                    <h2>Your Secure Digital Fortress.</h2>
+                    <p>Protecting your assets with cutting-edge cryptography.</p>
+                </div>
+            `;
+        });
+
+    </script>
+</body>
+</html>
