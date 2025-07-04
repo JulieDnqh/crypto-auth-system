@@ -3,50 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auth Form</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Crypto Auth System</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header, .footer {
+            background-color: #004d66; /* Dark teal */
+            height: 60px;
+            width: 100%;
+        }
+        .header-top {
+            background-color: #00334d; /* Even darker teal for the very top bar */
+            height: 20px;
+            width: 100%;
+        }
+        .container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            width: 80%; /* Adjust as needed */
+            max-width: 1000px; /* Max width for the card */
+            min-height: 400px;
+        }
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+        }
+        .right-panel {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e0f2f7; /* Light blue background for the icon */
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        .icon-shield {
+            width: 150px; /* Adjust size as needed */
+            height: 150px;
+            background-color: #26a69a; /* Teal color for the shield */
+            border-radius: 50%; /* Make it circular for now, will replace with SVG later */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 80px;
+        }
+        .icon-user {
+            width: 80px;
+            height: 80px;
+            background-color: #ffe0b2; /* Light peach color */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ff9800; /* Orange color for the user icon */
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+        .button.signup {
+            background-color: #004d66; /* Dark teal */
+        }
+        .button.signin {
+            background-color: #26a69a; /* Teal */
+        }
+    </style>
 </head>
 <body>
-    <div class="container" id="container">
-        <div class="form-container sign-up-container">
-            <form id="signup-form" action="/submit-form" method="POST">
-                <h1>Create Account</h1>
-                <input type="email" placeholder="Email" name="email" required />
-                <input type="text" placeholder="Họ tên" name="fullName" required />
-                <input type="date" placeholder="Ngày sinh" name="dob" />
-                <input type="tel" placeholder="Số điện thoại" name="phoneNumber" />
-                <input type="text" placeholder="Địa chỉ" name="address" />
-                <input type="password" placeholder="Passphrase" name="passphrase" required />
-                <input type="hidden" name="action" value="signup">
-                <button type="submit">Sign Up</button>
-            </form>
-        </div>
-        <div class="form-container sign-in-container">
-            <form id="signin-form" action="/submit-form" method="POST">
-                <h1>Sign in</h1>
-                <input type="email" placeholder="Email" name="email" required />
-                <input type="password" placeholder="Passphrase" name="passphrase" required />
-                <a href="#">Forgot your password?</a>
-                <input type="hidden" name="action" value="login">
-                <button type="submit">Sign In</button>
-            </form>
-        </div>
-        <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-left">
-                    <h1>Welcome Back!</h1>
-                    <p>To keep connected with us please login with your personal info</p>
-                    <button class="ghost" id="signIn">Sign In</button>
+    <div class="header-top"></div>
+    <div class="header"></div>
+    <div class="container">
+        <div class="card">
+            <div class="left-panel">
+                <div class="icon-user">👤</div> <!-- Placeholder for user shield icon -->
+                <h1>Crypto Auth System</h1>
+                <p>To continue, kindly log in with your account</p>
+                <div class="buttons">
+                    <a href="/signup" class="button signup">Sign up</a>
+                    <a href="/login" class="button signin">Sign in</a>
                 </div>
-                <div class="overlay-panel overlay-right">
-                    <h1>Hello, Friend!</h1>
-                    <p>Enter your personal details and start journey with us</p>
-                    <button class="ghost" id="signUp">Sign Up</button>
-                </div>
+            </div>
+            <div class="right-panel">
+                <div class="icon-shield">🔒</div> <!-- Placeholder for crypto shield icon -->
             </div>
         </div>
     </div>
-    <div id="user-input-display"></div>
-    <script src="script.js"></script>
+    <div class="footer"></div>
 </body>
 </html>

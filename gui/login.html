@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Auth System - Login</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+        .auth-wrapper {
+            display: flex;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 900px; /* Increased max-width for two columns */
+            overflow: hidden; /* Ensures rounded corners apply to children */
+        }
+        .form-column {
+            flex: 1;
+            padding: 40px;
+            text-align: center;
+        }
+        .info-column {
+            flex: 1;
+            background-color: #007bff; /* Blue background for info column */
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .info-column h2 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+        .info-column p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 2em;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+        .button {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .link-text {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+        .link-text a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .link-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="form-column">
+            <h1>Login</h1>
+            <form action="/login" method="POST">
+                <div class="input-group">
+                    <label for="username">Username or Email</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="button">Login</button>
+            </form>
+            <p class="link-text">Don't have an account? <a href="/signup">Sign Up</a></p>
+        </div>
+        <div class="info-column">
+            <h2>Welcome Back!</h2>
+            <p>Log in to access your secure Crypto Auth System account. We prioritize your security with advanced encryption and multi-factor authentication.</p>
+            <p>New to our platform? Sign up today to protect your digital assets.</p>
+        </div>
+    </div>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = {};
+            const inputs = this.querySelectorAll('input');
+            inputs.forEach(input => {
+                formData[input.name] = input.value;
+            });
+
+            console.log('Login Form Data:', formData); // Log data to browser console
+            this.reset(); // Reset form fields
+        });
+    </script>
+</body>
+</html>
