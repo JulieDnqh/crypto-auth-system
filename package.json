@@ -21,7 +21,8 @@
     "dotenv": "^17.0.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mssql": "^11.0.1"
+    "mssql": "^11.0.1",
+    "nodemailer": "^7.0.4"
   },
   "devDependencies": {
     "concurrently": "^9.2.0",

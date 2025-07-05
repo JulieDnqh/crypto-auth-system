@@ -3,12 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlserver"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id              Int      @id @default(autoincrement())
+  // MongoDB dùng chuỗi hex làm ID
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
   email           String   @unique
   firstName       String
   lastName        String
@@ -16,9 +18,19 @@ model User {
   phone           String?
   address         String?
   
-  passwordHash    String   @db.NVarChar(Max)
-  passwordSalt    String   @db.NVarChar(Max)
-
+  // Các trường này vẫn giữ nguyên
+  passwordHash    String
+  passwordSalt    String
+  
+  // Các trường OTP
+  otp             String?
+  otpCreatedAt    DateTime?
+  otpExpiresAt    DateTime?
+  
+  // Các trường thời gian
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+
+  // === ĐỔI TÊN COLLECTION TRONG DB (Tùy chọn) ===
+  @@map("users") 
 }

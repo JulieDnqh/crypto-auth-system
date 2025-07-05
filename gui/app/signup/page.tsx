@@ -7,11 +7,14 @@ import { Button } from "../components/button"
 import { Input } from "../components/input"
 import { Label } from "../components/label"
 import { Checkbox } from "../components/checkbox"
-import { Eye, EyeOff, Shield, Lock, Users } from "lucide-react"
+import { SuccessModal } from "../components/SuccessModal"
+import { Eye, EyeOff } from "lucide-react"
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  // const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(true)
 
   // BƯỚC 1: QUẢN LÝ TRẠNG THÁI CỦA FORM
   // Tạo một state duy nhất để lưu tất cả dữ liệu form
@@ -67,7 +70,9 @@ export default function SignUpPage() {
       const result = await response.json()
 
       if (response.ok) {
-        alert("Đăng ký thành công!")
+        // alert("Đăng ký thành công!")
+        setIsSuccessModalOpen(true);
+
         // Chuyển hướng đến trang đăng nhập hoặc trang dashboard
         // window.location.href = '/signin'
       } else {
@@ -81,6 +86,7 @@ export default function SignUpPage() {
   }
 
   return (
+    <> {/* Dùng Fragment để bọc cả trang và modal */}
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       {/* <div className="bg-[#0C5776] h-16"> */}
@@ -171,7 +177,7 @@ export default function SignUpPage() {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2"
                     >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      {showPassword ? <Eye className="w-4 h-4 text-gray-500 hover:text-gray-700" /> : <EyeOff className="w-4 h-4 text-gray-500 hover:text-gray-700" />}
                     </button>
                   </div>
                 </div>
@@ -194,7 +200,7 @@ export default function SignUpPage() {
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2"
                     >
-                      {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      {showConfirmPassword ? <Eye className="w-4 h-4 text-gray-500 hover:text-gray-700" /> : <EyeOff className="w-4 h-4 text-gray-500 hover:text-gray-700" />}
                     </button>
                   </div>
                 </div>
@@ -304,5 +310,11 @@ export default function SignUpPage() {
       {/* Footer */}
       {/* <div className="bg-[#0C5776] h-16"></div> */}
     </div>
+
+    <SuccessModal 
+        isOpen={isSuccessModalOpen} 
+        onClose={() => setIsSuccessModalOpen(false)} 
+    />
+    </>
   )
 }

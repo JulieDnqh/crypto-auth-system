@@ -21,7 +21,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* === HEADER === */}
-      <header className="flex items-center h-16 bg-[#0C5776] text-white px-6 shrink-0">
+      <header className="flex items-center h-16 bg-[#0C5776] px-6 shrink-0">
         {/* <h1 className="text-lg font-medium">Sign up and Sign In</h1> */}
       </header>
 
