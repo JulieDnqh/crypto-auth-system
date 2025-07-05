@@ -50,13 +50,11 @@ This is a project for the **Computer Security** course, simulating a secure web 
 
 ---
 
-# 🚀 Getting Started: How to Run the System
+## 🚀 Getting Started: How to Run the System
 
 Follow these steps to set up and run the project on your local machine.
 
----
-
-## 1. 📦 Prerequisites
+### 1. 📦 Prerequisites
 
 Make sure you have the following software installed:
 
@@ -67,9 +65,9 @@ Make sure you have the following software installed:
 
 ---
 
-## 2. ⚙️ Installation and Setup
+### 2. ⚙️ Installation and Setup
 
-### 🔹 Step 1: Clone the Repository
+#### 🔹 Step 1: Clone the Repository
 
 ```bash
 git clone https://github.com/JulieDnqh/crypto-auth-system.git
@@ -78,7 +76,7 @@ cd CryptoAuthSystem
 
 ---
 
-### 🔹 Step 2: Install Dependencies
+#### 🔹 Step 2: Install Dependencies
 
 This project is a monorepo managed with **npm workspaces**. To install all dependencies (frontend + backend):
 
@@ -88,14 +86,14 @@ npm install
 
 ---
 
-### 🔹 Step 3: Database Setup
+#### 🔹 Step 3: Database Setup
 
-#### a. Create the Database:
+##### a. Create the Database:
 
 - Open **SQL Server Management Studio (SSMS)**
 - Create a new database named: `CryptoAuthDB`
 
-#### b. Create SQL Server Login:
+##### b. Create SQL Server Login:
 
 - Go to `Security > Logins`
 - Create a new SQL Server login (e.g.,  
@@ -103,7 +101,7 @@ npm install
   password: `your_strong_password`)
 - In **User Mapping** tab, map this login to `CryptoAuthDB` and grant it `db_owner`
 
-#### c. Enable TCP/IP Protocol:
+##### c. Enable TCP/IP Protocol:
 
 - Open **SQL Server Configuration Manager**
 - Go to:  
@@ -111,22 +109,22 @@ npm install
 - Ensure **TCP/IP** is enabled
 - Restart SQL Server service if needed
 
-#### d. Configure Windows Firewall:
+##### d. Configure Windows Firewall:
 
 - Open **Windows Defender Firewall with Advanced Security**
 - Add a new **Inbound Rule** to allow TCP port `1433`
 
 ---
 
-### 🔹 Step 4: Configure Environment Variables
+#### 🔹 Step 4: Configure Environment Variables
 
-#### a. Create `.env` file in root directory:
+##### a. Create `.env` file in root directory:
 
 ```
 CryptoAuthSystem/.env
 ```
 
-#### b. Add database connection string:
+##### b. Add database connection string:
 
 ```ini
 # File: .env
@@ -141,7 +139,7 @@ Replace the placeholders:
 
 ---
 
-### 🔹 Step 5: Run Database Migrations
+#### 🔹 Step 5: Run Database Migrations
 
 This will create necessary tables (e.g., `Users`) using Prisma:
 
@@ -153,7 +151,7 @@ npx prisma migrate dev
 
 ---
 
-## 3. 🧪 Running the Application
+### 3. 🧪 Running the Application
 
 To start both frontend and backend servers **simultaneously**, run:
 
