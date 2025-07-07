@@ -1,155 +1,170 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Home, Users, ScrollText, Settings, ChevronDown, ChevronUp, Lock, Unlock } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import Link from "next/link";
+import { ChevronDown, ChevronUp, User, Key, FileText, Settings, Shield } from "lucide-react";
+import useAuth from "../../lib/hooks/useAuth"; // Import useAuth
+import LogoutButton from "../../components/LogoutButton"; // Import LogoutButton
 
-const DropdownItem = ({ icon: Icon, text, onClick }) => (
-  <li className="mb-2 ml-4">
-    <a
-      href="#"
-      onClick={onClick}
-      className="flex items-center text-gray-600 hover:text-blue-600 hover:bg-blue-50 p-2 rounded-md transition-colors duration-200"
-    >
-      <Icon className="mr-3" size={18} />
-      {text}
-    </a>
-  </li>
-);
+const Sidebar = ({ isAdmin = false }) => {
+  const [openMenus, setOpenMenus] = useState({});
 
-const DropdownMenu = ({ title, icon: Icon, children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <li className="mb-4">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 p-2 rounded-md transition-colors duration-200 focus:outline-none"
-      >
-        <span className="flex items-center">
-          <Icon className="mr-3" size={20} />
-          {title}
-        </span>
-        {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-      </button>
-      {isOpen && <ul className="mt-2">{children}</ul>}
-    </li>
-  );
-};
-
-const AdminPage = () => {
-  const [activeContent, setActiveContent] = useState('overview');
-  const router = useRouter();
-
-  const renderContent = () => {
-    switch (activeContent) {
-      case 'overview':
-        return (
-          <div className="text-center py-20">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Welcome to Admin Dashboard!</h2>
-            <p className="text-lg text-gray-600">Select an option from the sidebar to manage the system.</p>
-          </div>
-        );
-      case 'user_list':
-        return (
-          <section>
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">User List</h2>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <p className="text-gray-600">[Table or list of all registered users]</p>
-            </div>
-          </section>
-        );
-      case 'lock_unlock_account':
-        return (
-          <section>
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Lock/Unlock Account</h2>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <p className="text-gray-600">[Form to search and lock/unlock user accounts]</p>
-            </div>
-          </section>
-        );
-      case 'system_logs':
-        return (
-          <section>
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">System Logs</h2>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <p className="text-gray-600">[Table or list of all system activities and security logs]</p>
-            </div>
-          </section>
-        );
-      case 'admin_settings':
-        return (
-          <section>
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Admin Settings</h2>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <p className="text-gray-600">[General settings for admin panel]</p>
-            </div>
-          </section>
-        );
-      default:
-        return null;
-    }
+  const toggleMenu = (menuName) => {
+    setOpenMenus((prev) => ({
+      ...prev,
+      [menuName]: !prev[menuName],
+    }));
   };
 
+  const commonFeatures = [
+    {
+      name: "Quản lý tài khoản",
+      icon: <User className="w-5 h-5" />,
+      items: [
+        { label: "Cập nhật thông tin tài khoản", href: "#" },
+        { label: "Khôi phục tài khoản", href: "#" },
+      ],
+    },
+    {
+      name: "Quản lý khoá",
+      icon: <Key className="w-5 h-5" />,
+      items: [
+        { label: "Quản lý khoá RSA cá nhân", href: "#" },
+        { label: "QR Code Public Key", href: "#" },
+        { label: "Tìm kiếm public key", href: "#" },
+      ],
+    },
+    {
+      name: "Xử lý tập tin",
+      icon: <FileText className="w-5 h-5" />,
+      items: [
+        { label: "Mã hoá tập tin gửi người khác", href: "#" },
+        { label: "Giải mã tập tin", href: "#" },
+        { label: "Ký số tập tin", href: "#" },
+        { label: "Xác minh chữ ký", href: "#" },
+      ],
+    },
+  ];
+
+  const adminFeatures = [
+    {
+      name: "Tính năng Admin",
+      icon: <Shield className="w-5 h-5" />,
+      items: [
+        { label: "Phân quyền tài khoản", href: "#" },
+        { label: "Ghi log bảo mật", href: "#" },
+        { label: "Kiểm tra trạng thái khoá", href: "#" },
+        { label: "Giới hạn đăng nhập", href: "#" },
+      ],
+    },
+  ];
+
+  const menuItems = isAdmin ? [...commonFeatures, ...adminFeatures] : commonFeatures;
+
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-64 bg-white p-6 shadow-md">
-        <div className="text-2xl font-bold text-gray-800 mb-8">Admin Dashboard</div>
-        <nav>
-          <ul>
-            <li className="mb-4">
-              <a
-                href="#"
-                onClick={() => setActiveContent('overview')}
-                className="flex items-center text-gray-700 hover:text-blue-600 hover:bg-blue-50 p-2 rounded-md transition-colors duration-200"
+    <div className="w-64 bg-[#0C5776] text-white p-4 h-full overflow-y-auto">
+      <h2 className="text-2xl font-bold mb-6 text-center">Dashboard</h2>
+      <nav>
+        <ul>
+          {menuItems.map((menu) => (
+            <li key={menu.name} className="mb-2">
+              <button
+                onClick={() => toggleMenu(menu.name)}
+                className="flex items-center justify-between w-full p-2 rounded-md hover:bg-[#2D99AE] focus:outline-none"
               >
-                <Home className="mr-3" size={20} />
-                Overview
-              </a>
+                <span className="flex items-center">
+                  {menu.icon}
+                  <span className="ml-3">{menu.name}</span>
+                </span>
+                {openMenus[menu.name] ? (
+                  <ChevronUp className="w-4 h-4" />
+                ) : (
+                  <ChevronDown className="w-4 h-4" />
+                )}
+              </button>
+              {openMenus[menu.name] && (
+                <ul className="ml-6 mt-1 space-y-1">
+                  {menu.items.map((item) => (
+                    <li key={item.label}>
+                      <Link href={item.href} className="block p-2 rounded-md hover:bg-[#2D99AE]">
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
-
-            <DropdownMenu title="User Management" icon={Users}>
-              <DropdownItem icon={Users} text="User List" onClick={() => setActiveContent('user_list')} />
-              <DropdownItem icon={Lock} text="Lock/Unlock Account" onClick={() => setActiveContent('lock_unlock_account')} />
-            </DropdownMenu>
-
-            <DropdownMenu title="System Logs" icon={ScrollText}>
-              <DropdownItem icon={ScrollText} text="View System Logs" onClick={() => setActiveContent('system_logs')} />
-            </DropdownMenu>
-
-            <li className="mb-4">
-              <a
-                href="#"
-                onClick={() => setActiveContent('admin_settings')}
-                className="flex items-center text-gray-700 hover:text-blue-600 hover:bg-blue-50 p-2 rounded-md transition-colors duration-200"
-              >
-                <Settings className="mr-3" size={20} />
-                Settings
-              </a>
-            </li>
-
-            {/* Link back to User Dashboard */}
-            <li className="mb-4 mt-8 pt-4 border-t border-gray-200">
-              <a
-                href="#"
-                onClick={() => router.push('/dashboard')}
-                className="flex items-center text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded-md transition-colors duration-200"
-              >
-                <Home className="mr-3" size={20} />
-                Back to User Dashboard
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 p-8">
-        {renderContent()}
-      </main>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 };
 
-export default AdminPage;
+import { useEffect } from 'react';
+
+export default function DashboardAdminPage() {
+  useAuth(); // Áp dụng hook bảo vệ route
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem('jwtToken');
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/dashboard', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setUserData(data.user); // Backend trả về { message, user }
+      } catch (err) {
+        console.error("Error fetching profile:", err);
+        setError("Failed to load user data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  return (
+    <div className="flex h-screen bg-gray-100">
+      <Sidebar isAdmin={true} />
+      <div className="flex-1 flex flex-col">
+        <header className="bg-white shadow p-4 flex justify-between items-center">
+          <h1 className="text-xl font-semibold text-[#001C44]">Admin Dashboard</h1>
+          <LogoutButton />
+        </header>
+        <main className="flex-1 p-6 overflow-y-auto">
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold text-[#001C44] mb-4">Welcome, {userData ? userData.firstName : 'Admin'}!</h2>
+            {loading && <p>Loading user data...</p>}
+            {error && <p className="text-red-500">{error}</p>}
+            {userData && (
+              <div className="text-gray-700">
+                <p>Email: {userData.email}</p>
+                <p>Role: {userData.role}</p>
+                {/* Display other user data as needed */}
+              </div>
+            )}
+            <p className="text-gray-700 mt-4">This is your personalized admin dashboard. Use the sidebar to navigate through features.</p>
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+}

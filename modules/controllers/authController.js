@@ -92,7 +92,47 @@ const signup = async (req, res) => {
 
 // Hàm xử lý đăng nhập (ví dụ)
 const signin = async (req, res) => {
-  // ... Logic đăng nhập sẽ được thêm vào đây ...
+  try {
+    const { email, password } = req.body;
+
+    // 1. Tìm user trong DB
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password." });
+    }
+
+    // 2. So khớp mật khẩu
+    const isPasswordCorrect = await bcrypt.compare(password, user.passwordHash);
+    if (!isPasswordCorrect) {
+      return res.status(401).json({ message: "Invalid email or password." });
+    }
+
+    // 3. Tạo JSON Web Token (JWT)
+    const token = jwt.sign(
+      { userId: user.id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    // 4. Trả về token và thông tin user
+    res.status(200).json({
+      message: "Login successful!",
+      token: token,
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        birthDate: user.birthDate,
+        phone: user.phone,
+        address: user.address,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error("Error in signin:", error);
+    res.status(500).json({ message: "Internal server error." });
+  }
 };
 
 const signinStep1 = async (req, res) => {
@@ -169,16 +209,23 @@ const verifyOtp = async (req, res) => {
       data: { otp: null, otpCreatedAt: null, otpExpiresAt: null },
     });
 
-    // 4. Tạo JSON Web Token (JWT) để duy trì phiên đăng nhập
-    // const token = jwt.sign(
-    //   { userId: user.id, email: user.email },
-    //   process.env.JWT_SECRET || 'YOUR_DEFAULT_SECRET_KEY', // Nên đặt secret key trong file .env
-    //   { expiresIn: '1h' } // Token hết hạn sau 1 giờ
-    // );
+    // Generate JWT with userId, email, and role
+    const token = jwt.sign(
+      { userId: user.id, email: user.email, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" } // Token expires in 1 hour
+    );
 
+    // 4. Trả về token và thông tin user (giữ nguyên cấu trúc user)
     res.status(200).json({
       message: "Login successful!",
-      user: { id: user.id, email: user.email, firstName: user.firstName },
+      token: token, // Include the token here
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        role: user.role,
+      },
     });
   } catch (error) {
     console.error("Error verifying OTP:", error);

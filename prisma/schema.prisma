@@ -26,6 +26,8 @@ model User {
   otp             String?
   otpCreatedAt    DateTime?
   otpExpiresAt    DateTime?
+
+  role            String   @default("USER")
   
   // Các trường thời gian
   createdAt       DateTime @default(now())

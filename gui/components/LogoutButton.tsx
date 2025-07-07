@@ -1,0 +1,25 @@
+"use client";
+
+import { useRouter } from 'next/navigation';
+import { LogOut } from 'lucide-react';
+
+const LogoutButton = () => {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwtToken'); // Xóa token khỏi localStorage
+    router.push('/signin'); // Chuyển hướng về trang đăng nhập
+  };
+
+  return (
+    <button
+      onClick={handleLogout}
+      className="flex items-center px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+    >
+      <LogOut className="w-4 h-4 mr-2" />
+      Logout
+    </button>
+  );
+};
+
+export default LogoutButton;
