@@ -86,8 +86,14 @@ export const OtpModal: React.FC<OtpModalProps> = ({ isOpen, email, onClose, onVe
   const handleResend = async () => {
     if (timer > 0) return; // Chỉ cho phép gửi lại khi timer = 0
     await onResend();
-    setTimer(60); // Reset lại timer
+    setTimer(300); // Reset lại timer
   }
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
 
   if (!isOpen) return null;
 
@@ -113,7 +119,7 @@ export const OtpModal: React.FC<OtpModalProps> = ({ isOpen, email, onClose, onVe
               value={digit}
               onChange={(e) => handleChange(e, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className={`w-12 h-14 text-center text-2xl font-semibold border rounded-lg focus:outline-none focus:ring-2 ${
+              className={`w-12 h-14 text-center text-2xl text-[#001C44] font-semibold border rounded-lg focus:outline-none focus:ring-2 ${
                 error ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-[#2D99AE]"
               }`}
             />
@@ -136,7 +142,7 @@ export const OtpModal: React.FC<OtpModalProps> = ({ isOpen, email, onClose, onVe
 
         <div className="mt-6 text-center">
           <p className="text-gray-500 text-sm mb-2">
-            {timer > 0 ? `00:${timer.toString().padStart(2, '0')}` : "Didn't receive code?"}
+            {timer > 0 ? formatTime(timer) : "Didn't receive code?"}
           </p>
           <button
             onClick={handleResend}

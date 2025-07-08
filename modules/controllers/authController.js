@@ -109,7 +109,7 @@ const signin = async (req, res) => {
 
     // 3. Tạo JSON Web Token (JWT)
     const token = jwt.sign(
-      { userId: user.id, role: user.role },
+      { userId: user.id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );

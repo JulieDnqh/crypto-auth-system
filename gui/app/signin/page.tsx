@@ -8,7 +8,7 @@ import { Button } from "../components/button";
 import { Input } from "../components/input";
 import { Label } from "../components/label";
 import { OtpModal } from "../components/OtpModal";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
@@ -184,7 +184,7 @@ export default function SignInPage() {
                       id="email"
                       type="email"
                       placeholder="example.email@gmail.com"
-                      className="mt-1 border-gray-300"
+                      className="mt-1 bg-[#F3F4F6] border-[#F3F4F6] text-[#9095A1]"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
@@ -203,7 +203,7 @@ export default function SignInPage() {
                         id="password"
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter at least 8+ characters"
-                        className="border-gray-300 pr-10"
+                        className="mt-1 bg-[#F3F4F6] border-[#F3F4F6] text-[#9095A1]"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -253,10 +253,16 @@ export default function SignInPage() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-[#2D99AE] hover:bg-[#0C5776] text-white py-3 rounded-md"
+                    className="w-full bg-[#2D99AE] hover:bg-[#0C5776] text-white py-3 rounded-md flex items-center justify-center disabled:opacity-75 disabled:cursor-not-allowed"
                     disabled={isLoading}
                   >
-                    Sign in
+                    {isLoading ? (
+                      // Nếu đang loading, hiển thị icon quay
+                      <LoaderCircle className="h-5 w-5 animate-spin mx-auto" />
+                    ) : (
+                      // Nếu không, hiển thị chữ "Sign in"
+                      "Sign in"
+                    )}
                   </Button>
 
                   <p className="text-center text-sm text-gray-600">

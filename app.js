@@ -13,6 +13,9 @@ app.use(express.json()); // Để đọc được body dạng JSON
 const authRoutes = require("./modules/routes/authRoutes");
 app.use("/api/auth", authRoutes); // Tất cả các route trong authRoutes sẽ có tiền tố /api/auth
 
+const rsaRoutes = require('./modules/routes/rsaRoutes');
+app.use('/api/rsa', rsaRoutes);
+
 app.listen(port, () => {
   console.log(`Backend server is running on http://localhost:${port}`);
 });

@@ -14,7 +14,7 @@ const LogoutButton = () => {
   return (
     <button
       onClick={handleLogout}
-      className="flex items-center px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+      className="flex items-center px-4 py-2 text-sm font-medium text-white bg-[#2D99AE] rounded-md hover:bg-[#0C5776] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
     >
       <LogOut className="w-4 h-4 mr-2" />
       Logout

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, ChevronUp, User, Key, FileText, Settings, Shield } from "lucide-react";
 import useAuth from "../../lib/hooks/useAuth"; // Import useAuth
-import LogoutButton from "../../components/LogoutButton"; // Import LogoutButton
+import LogoutButton from "../components/LogoutButton"; // Import LogoutButton
 
 const Sidebar = ({ isAdmin = false }) => {
   const [openMenus, setOpenMenus] = useState({});

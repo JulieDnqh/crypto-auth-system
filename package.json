@@ -23,9 +23,12 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mssql": "^11.0.1",
-    "nodemailer": "^7.0.4"
+    "nodemailer": "^7.0.4",
+    "qrcode.react": "^4.2.0",
+    "react-qr-code": "^2.0.18"
   },
   "devDependencies": {
+    "@types/qrcode.react": "^3.0.0",
     "concurrently": "^9.2.0",
     "nodemon": "^3.1.10",
     "prisma": "^6.11.1"

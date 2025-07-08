@@ -8,8 +8,7 @@ datasource db {
 }
 
 model User {
-  // MongoDB dùng chuỗi hex làm ID
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
 
   email           String   @unique
   firstName       String
@@ -17,22 +16,38 @@ model User {
   birthDate       DateTime?
   phone           String?
   address         String?
-  
-  // Các trường này vẫn giữ nguyên
+
   passwordHash    String
   passwordSalt    String
-  
-  // Các trường OTP
+
   otp             String?
   otpCreatedAt    DateTime?
   otpExpiresAt    DateTime?
 
   role            String   @default("USER")
-  
-  // Các trường thời gian
+
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
-  // === ĐỔI TÊN COLLECTION TRONG DB (Tùy chọn) ===
-  @@map("users") 
+  // ✅ One-to-one: user chỉ có 1 rsaKey
+  rsaKey          RSAKey?  @relation("UserRSAKey")
+
+  @@map("users")
+}
+
+model RSAKey {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  publicKey           String
+  encryptedPrivateKey String
+  passphraseSalt      String
+  iv                  String
+
+  createdAt           DateTime @default(now())
+  expiresAt           DateTime
+
+  userId              String   @unique @db.ObjectId
+  user                User     @relation("UserRSAKey", fields: [userId], references: [id])
+
+  @@map("rsa_keys")
 }
