@@ -1,8 +1,8 @@
 // File: gui/app/dashboard/page.tsx
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useState, useEffect, useCallback } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import useAuth from "@/lib/hooks/useAuth";
 import LogoutButton from "@/app/components/LogoutButton";
 import { Sidebar } from "@/app/components/dashboard-components/Sidebar";
@@ -13,6 +13,10 @@ interface UserData {
   id: string;
   email: string;
   firstName: string;
+  lastName: string;  // Thêm trường lastName
+  birthDate?: string; // Thêm các trường tùy chọn
+  phone?: string;
+  address?: string;
   role: 'user' | 'admin';
 }
 
@@ -28,38 +32,46 @@ export default function DashboardPage() {
   const searchParams = useSearchParams();
   const selectedFeaturePath = searchParams.get('feature');
 
+  const fetchProfile = useCallback(async () => {
+    const token = localStorage.getItem('jwtToken'); // Đổi tên token cho đúng
+    if (!token) {
+      setLoading(false);
+      router.push('/signin'); // Quay về trang đăng nhập nếu không có token
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/dashboard', {
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) localStorage.removeItem('jwtToken'); // Xóa token hỏng
+        throw new Error(`Authentication failed: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      console.log("✅ Dữ liệu 'user' nhận được từ backend:", data.user); // LOG 6
+
+      setUserData(data.user);
+    } catch (err: any) {
+      console.error("Error fetching profile:", err);
+      setError(err.message || "Failed to load user data.");
+    } finally {
+      setLoading(false);
+    }
+  }, [router]);
+
   // Fetch dữ liệu người dùng
   useEffect(() => {
-    const fetchProfile = async () => {
-      const token = localStorage.getItem('jwtToken'); // Đổi tên token cho đúng
-      if (!token) {
-        setLoading(false);
-        router.push('/signin'); // Quay về trang đăng nhập nếu không có token
-        return;
-      }
-
-      try {
-        const response = await fetch('http://localhost:5000/api/auth/dashboard', {
-          headers: { 'Authorization': `Bearer ${token}` },
-        });
-
-        if (!response.ok) {
-          if (response.status === 401) localStorage.removeItem('authToken'); // Xóa token hỏng
-          throw new Error(`Authentication failed: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        setUserData(data.user);
-      } catch (err: any) {
-        console.error("Error fetching profile:", err);
-        setError(err.message || "Failed to load user data.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfile();
-  }, [router]);
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+        fetchProfile();
+    } else {
+        router.push('/signin'); // Chuyển hướng nếu không có token ngay từ đầu
+    }
+  }, [fetchProfile, router]);
 
   // Hàm được gọi khi nhấn vào một item trong sidebar
   const handleItemClick = (path: string) => {
@@ -71,6 +83,17 @@ export default function DashboardPage() {
     // Nếu có feature được chọn trong URL và nó tồn tại trong map
     if (selectedFeaturePath && featureComponents[selectedFeaturePath]) {
       const ComponentToRender = featureComponents[selectedFeaturePath];
+
+      // Nếu component cần dữ liệu người dùng (ví dụ: AccountManagement)
+      if (selectedFeaturePath === 'account-management') {
+          // Chỉ render khi đã có userData, nếu không sẽ bị lỗi
+          if (userData) {
+              return <ComponentToRender currentUser={userData} />;
+          }
+          // Nếu chưa có userData (đang loading hoặc lỗi), hiển thị thông báo
+          return <div>Loading user data for this feature...</div>;
+      }
+
       return <ComponentToRender />;
     }
 

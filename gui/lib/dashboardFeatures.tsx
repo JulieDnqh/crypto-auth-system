@@ -4,7 +4,7 @@ import { User, Key, FileText, Shield } from "lucide-react";
 
 // Import các component tính năng của bạn
 import RSAPersonalKeyManagement from "@/app/components/dashboard-components/KeyManagement";
-// import AccountManagement from "@/app/components/dashboard-components/AccountManagement";
+import AccountManagement from "@/app/components/dashboard-components/AccountManagement";
 // ... import các component khác ...
 
 // --- ĐỊNH NGHĨA CẤU TRÚC DỮ LIỆU ---
@@ -59,6 +59,6 @@ type FeatureComponentMap = {
 // Object map
 export const featureComponents: FeatureComponentMap = {
   "rsa-personal-key": RSAPersonalKeyManagement,
-  // "account-management": AccountManagement,
+  "account-management": AccountManagement,
   // ... thêm các component khác vào đây
 };

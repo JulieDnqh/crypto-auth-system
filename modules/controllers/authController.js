@@ -2,6 +2,7 @@ const prisma = require("../config/db"); // Import Prisma client từ file config
 const bcrypt = require("bcryptjs"); // Cần cài đặt: npm install bcryptjs
 const jwt = require("jsonwebtoken"); // Cần cài đặt: npm install jsonwebtoken
 const nodemailer = require("nodemailer");
+const { encryptPrivateKey, decryptPrivateKey } = require('../utils/cryptoHelpers');
 
 // Hàm xử lý đăng ký
 const signup = async (req, res) => {
@@ -279,9 +280,168 @@ const sendOtpEmail = async (email, otp) => {
   }
 };
 
+const updateUserProfile = async (req, res) => {
+  try {
+        const userId = req.user.userId;
+        // Chỉ lấy các trường được phép cập nhật từ body
+        const { firstName, lastName, birthDate, phone, address } = req.body;
+
+        // Tạo một object để chứa các dữ liệu cần cập nhật
+        const dataToUpdate = {};
+
+        if (firstName) dataToUpdate.firstName = firstName;
+        if (lastName) dataToUpdate.lastName = lastName;
+        if (birthDate) dataToUpdate.birthDate = new Date(birthDate);
+        if (phone) dataToUpdate.phone = phone;
+        if (address) dataToUpdate.address = address;
+
+        // Nếu không có dữ liệu nào được gửi lên để cập nhật
+        if (Object.keys(dataToUpdate).length === 0) {
+            return res.status(400).json({ message: "No fields to update." });
+        }
+
+        const updatedUser = await prisma.user.update({
+            where: { id: userId },
+            data: dataToUpdate, // Chỉ cập nhật các trường có trong object này
+            select: { 
+                id: true, email: true, firstName: true, lastName: true, 
+                birthDate: true, phone: true, address: true, role: true 
+            }
+        });
+
+        res.status(200).json({ message: "Profile updated successfully.", user: updatedUser });
+
+    } catch (error) {
+        console.error("Error updating profile:", error);
+        res.status(500).json({ message: "Internal server error." });
+    }
+};
+
+const changePassword = async (req, res) => {
+  try {
+        const userId = req.user.userId;
+        const { oldPassword, newPassword } = req.body;
+
+        if (!oldPassword || !newPassword || newPassword.length < 8) {
+            return res.status(400).json({ message: "Invalid input." });
+        }
+
+        // 1. Lấy thông tin user và khóa RSA của họ
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            include: { keys: true } // Lấy cả thông tin khóa RSA
+        });
+
+        if (!user) { return res.status(404).json({ message: "User not found." }); }
+
+        // 2. Xác thực mật khẩu cũ
+        const isOldPasswordCorrect = await bcrypt.compare(oldPassword, user.passwordHash);
+        if (!isOldPasswordCorrect) {
+            return res.status(401).json({ message: "Incorrect old password." });
+        }
+
+        // 3. Băm mật khẩu mới
+        const newSalt = await bcrypt.genSalt(10);
+        const newPasswordHash = await bcrypt.hash(newPassword, newSalt);
+
+        // 4. Mã hóa lại Private Key nếu có
+        const userKey = user.keys.length > 0 ? user.keys[0] : null;
+        let updatedEncryptedPrivateKey;
+
+        if (userKey) {
+            // a. Giải mã Private Key bằng mật khẩu CŨ
+            const decryptedPrivateKey = decryptPrivateKey(
+                userKey.encryptedPrivateKey,
+                oldPassword, // Dùng mật khẩu cũ
+                userKey.passphraseSalt,
+                userKey.iv
+            );
+
+            // b. Mã hóa lại Private Key bằng mật khẩu MỚI
+            const reEncrypted = encryptPrivateKey(decryptedPrivateKey, newPassword);
+            updatedEncryptedPrivateKey = reEncrypted.encryptedData;
+
+             // Cập nhật lại khóa với private key đã mã hóa lại
+            await prisma.rSAKey.update({
+                where: { id: userKey.id },
+                data: { 
+                    encryptedPrivateKey: reEncrypted.encryptedData,
+                    passphraseSalt: reEncrypted.salt, // <-- Cập nhật salt mới
+                    iv: reEncrypted.iv                  // <-- Cập nhật iv mới
+                }
+            });
+        }
+
+        // 5. Cập nhật mật khẩu mới cho user
+        await prisma.user.update({
+            where: { id: userId },
+            data: {
+                passwordHash: newPasswordHash,
+                passwordSalt: newSalt
+            }
+        });
+        
+        // Ghi log (ví dụ)
+        console.log(`User ${userId} changed their password/passphrase.`);
+
+        res.status(200).json({ message: "Password updated successfully." });
+
+    } catch (error) {
+        console.error("Error changing password:", error);
+        // Kiểm tra lỗi giải mã đặc biệt
+        if (error.message.includes('bad decrypt')) {
+            return res.status(400).json({ message: "Decryption failed. The old password might be incorrect."});
+        }
+        res.status(500).json({ message: "Internal server error." });
+    }
+};
+
+const getDashboardData = async (req, res) => {
+  try {
+    // req.user.userId được gắn từ middleware xác thực (getAuth)
+    const userId = req.user.userId;
+
+    if (!userId) {
+      return res.status(400).json({ message: 'User ID not found in token.' });
+    }
+
+    // === BƯỚC QUAN TRỌNG: TRUY VẤN DATABASE ===
+    const userFromDb = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      // Dùng 'select' để chỉ định chính xác các trường cần lấy
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        birthDate: true,
+        phone: true,
+        address: true,
+        role: true,
+      },
+    });
+
+    if (!userFromDb) {
+      return res.status(404).json({ message: 'User not found in database.' });
+    }
+
+    // Trả về dữ liệu lấy từ database, không phải từ token
+    res.status(200).json({ message: 'User data fetched successfully', user: userFromDb });
+
+  } catch (error) {
+    console.error("Error fetching dashboard data:", error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 module.exports = {
   signup,
   signin,
   signinStep1,
   verifyOtp,
+  updateUserProfile,
+  changePassword,
+  getDashboardData,
 };
