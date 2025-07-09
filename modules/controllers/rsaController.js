@@ -1,6 +1,7 @@
 // File: controllers/rsaController.js
 const prisma = require('../config/db');
 const crypto = require('crypto');
+const bcrypt = require('bcryptjs');
 
 // Hàm helper để mã hóa private key
 const encryptPrivateKey = (privateKey, passphrase) => {
@@ -23,10 +24,9 @@ const encryptPrivateKey = (privateKey, passphrase) => {
 // Controller để tạo khóa
 exports.generateKeys = async (req, res) => {
     try {
-        // const { passphrase } = req.body;
         const userId = req.user.userId;
 
-        // 1. KIỂM TRA XEM USER ĐÃ CÓ KHÓA CHƯA
+        // Kiểm tra user đã có khóa RSA chưa
         const existingKey = await prisma.rSAKey.findUnique({
             where: { userId: userId }
         });
@@ -35,26 +35,41 @@ exports.generateKeys = async (req, res) => {
             return res.status(409).json({ message: 'User already has an RSA key. Delete the old one to generate a new key.' });
         }
 
-        const { passphrase } = req.body;
-        if (!passphrase) {
-            return res.status(400).json({ message: 'Passphrase is required.' });
+        const { password } = req.body;
+        if (!password) {
+            return res.status(400).json({ message: 'Password is required to generate keys.' });
         }
 
-        // 1. Tạo cặp khóa RSA 2048-bit
+        // Lấy thông tin user (bao gồm cả passwordHash) từ DB
+        const user = await prisma.user.findUnique({
+            where: { id: userId }
+        });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        // Xác thực lại mật khẩu người dùng nhập
+        const isPasswordCorrect = await bcrypt.compare(password, user.passwordHash);
+        if (!isPasswordCorrect) {
+            return res.status(401).json({ message: "Incorrect password. Key generation denied." });
+        }
+
+        // Tạo cặp khóa RSA 2048-bit
         const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
             modulusLength: 2048,
             publicKeyEncoding: { type: 'spki', format: 'pem' },
             privateKeyEncoding: { type: 'pkcs8', format: 'pem' }
         });
 
-        // 2. Mã hóa Private Key bằng AES
-        const { encryptedData, salt, iv } = encryptPrivateKey(privateKey, passphrase);
+        // Mã hóa Private Key bằng AES
+        const { encryptedData, salt, iv } = encryptPrivateKey(privateKey, password);
 
-        // 3. Đặt hạn dùng 90 ngày
+        // Đặt hạn dùng 90 ngày
         const now = new Date();
         const expiresAt = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000);
 
-        // 4. Lưu vào database
+        // Lưu vào database
         const newKey = await prisma.rSAKey.create({
             data: {
                 publicKey: publicKey,
@@ -69,7 +84,8 @@ exports.generateKeys = async (req, res) => {
         res.status(201).json({
             message: 'RSA key pair generated and saved successfully.',
             publicKey: newKey.publicKey,
-            expiresAt: newKey.expiresAt
+            createdAt: newKey.createdAt,
+            expiresAt: newKey.expiresAt,
         });
 
     } catch (error) {

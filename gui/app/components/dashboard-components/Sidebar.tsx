@@ -29,7 +29,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin, onItemClick }) => {
     : commonFeaturesConfig;
 
   return (
-    <div className="w-64 bg-[#0C5776] text-white p-4 flex flex-col h-full overflow-y-auto">
+    <div className="w-64 bg-[#2D99AE] text-white p-4 flex flex-col h-full overflow-y-auto">
       <h2 className="text-2xl font-bold mb-6 text-center">Dashboard</h2>
       <nav className="flex-grow">
         <ul>
@@ -37,7 +37,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin, onItemClick }) => {
             <li key={menu.key} className="mb-2">
               <button
                 onClick={() => toggleMenu(menu.key)}
-                className="flex items-center justify-between w-full p-2 rounded-md hover:bg-[#2D99AE] focus:outline-none"
+                className="flex items-center justify-between w-full p-2 rounded-md hover:bg-[#0C5776] focus:outline-none"
               >
                 <span className="flex items-center">
                   {menu.icon}
@@ -52,7 +52,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin, onItemClick }) => {
                       <button
                         onClick={() => onItemClick(item.path)}
                         className={`block w-full text-left p-2 rounded-md ${
-                          currentFeaturePath === item.path ? 'bg-[#2D99AE] font-bold' : 'hover:bg-[#2D99AE]'
+                          currentFeaturePath === item.path ? 'bg-[#0C5776] font-bold' : 'hover:bg-[#0C5776]'
                         }`}
                       >
                         {item.label}

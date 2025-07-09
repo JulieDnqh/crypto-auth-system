@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Crypto Auth System",
   description: "Simulate a secure web application with features such as user registration, multi-factor authentication (OTP/TOTP), RSA key management, file encryption, digital signatures, QR code generation and scanning, account role management, activity logging, and account recovery.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

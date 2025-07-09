@@ -4,7 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 import { Button } from "../button";
 import { Input } from "../input";
 import { Label } from "../label";
-import { LoaderCircle, AlertTriangle, Trash2 } from "lucide-react";
+import { ErrorModal } from "../ErrorModal";
+import { LoaderCircle, AlertTriangle, Trash2, Eye, EyeOff } from "lucide-react";
 
 // Cập nhật interface
 interface KeyStatus {
@@ -18,10 +19,17 @@ interface KeyStatus {
 
 export default function RSAPersonalKeyManagement() {
   const [keyStatus, setKeyStatus] = useState<KeyStatus | null>(null);
-  const [passphrase, setPassphrase] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState("");
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+
+  const handleError = (errorMessage: string) => {
+      setError(errorMessage);
+      setIsErrorModalOpen(true); // Mở modal khi có lỗi
+  };
 
   // Tách logic fetch ra một hàm riêng để có thể gọi lại
   const fetchKeyStatus = useCallback(async () => {
@@ -50,7 +58,7 @@ export default function RSAPersonalKeyManagement() {
         throw new Error(errData.message || "Failed to fetch key status.");
       }
     } catch (err: any) {
-      setError(err.message);
+      handleError(err.message);
       setKeyStatus(null); // Reset status khi có lỗi
     } finally {
       setIsLoading(false);
@@ -65,7 +73,7 @@ export default function RSAPersonalKeyManagement() {
   // Hàm xử lý khi nhấn nút tạo khóa
   const handleGenerateKeys = async (e: React.FormEvent) => {
       e.preventDefault();
-      if (passphrase.length < 8) {
+      if (password.length < 8) {
           setError("Passphrase must be at least 8 characters long.");
           return;
       }
@@ -81,21 +89,21 @@ export default function RSAPersonalKeyManagement() {
                   "Content-Type": "application/json",
                   Authorization: `Bearer ${token}`,
               },
-              body: JSON.stringify({ passphrase }),
+              body: JSON.stringify({ password }),
           });
 
           const data = await response.json();
           if (response.ok) {
               alert("Key pair generated successfully!");
-              setKeyStatus({ hasKey: true, ...data }); // Cập nhật trạng thái
+              // setKeyStatus({ hasKey: true, ...data }); // Cập nhật trạng thái
               fetchKeyStatus(); // Gọi lại để cập nhật trạng thái khóa mới
           } else {
-              setError(data.message || "Failed to generate keys.");
+              handleError(data.message || "Failed to generate keys.");
           }
-      } catch(err) {
-          setError("Failed to connect to the server.");
+      } catch(err : any) {
+        handleError(err.message || "Failed to connect to the server.");
       } finally {
-          setIsLoading(false);
+        setIsLoading(false);
       }
   };
 
@@ -121,7 +129,7 @@ export default function RSAPersonalKeyManagement() {
               throw new Error(data.message || "Failed to delete key.");
           }
       } catch (err: any) {
-          setError(err.message);
+          handleError(err.message);
       } finally {
           setIsDeleting(false);
       }
@@ -131,15 +139,15 @@ export default function RSAPersonalKeyManagement() {
     return <div className="text-center p-6">Loading key status...</div>;
   }
 
-  if (error) {
-    return <div className="text-center p-6 text-red-500">Error: {error}</div>;
-  }
+  // if (error) {
+  //   return <div className="text-center p-6 text-red-500">Error: {error}</div>;
+  // }
   
   // Giao diện khi ĐÃ CÓ KHÓA
   if (keyStatus?.hasKey) {
     return (
         <div className="bg-white p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-bold text-[2D99AE] mb-4">Your RSA Key is Active</h3>
+            <h3 className="text-xl font-bold text-[#001C44] mb-4">Your RSA Key is Active</h3>
             
             {/* Cảnh báo hết hạn */}
             {keyStatus.expiryStatus === 'expiring_soon' && (
@@ -159,15 +167,15 @@ export default function RSAPersonalKeyManagement() {
             <div className="space-y-2 text-sm">
               <p>
                   <span className="font-bold text-[#001C44]">Created On:</span>
-                  <span className="ml-2">{keyStatus.createdAt ? new Date(keyStatus.createdAt).toLocaleString() : 'N/A'}</span>
+                  <span className="ml-2 text-[#001C44]">{keyStatus.createdAt ? new Date(keyStatus.createdAt).toLocaleString() : 'N/A'}</span>
               </p>
               <p>
                   <span className="font-bold text-[#001C44]">Expires On:</span>
-                  <span className="ml-2">{keyStatus.expiresAt ? new Date(keyStatus.expiresAt).toLocaleString() : 'N/A'}</span>
+                  <span className="ml-2 text-[#001C44]">{keyStatus.expiresAt ? new Date(keyStatus.expiresAt).toLocaleString() : 'N/A'}</span>
               </p>
               <div className="pt-2">
                   <p className="font-bold text-[#001C44]">Public Key:</p>
-                  <pre className="bg-[#BCFEFE] p-2 rounded text-xs overflow-x-auto mt-1 text-gray-900">
+                  <pre className="bg-[#F3F4F6] p-2 rounded text-xs overflow-x-auto mt-1 text-gray-900">
                       {keyStatus.publicKey}
                   </pre>
               </div>
@@ -190,26 +198,58 @@ export default function RSAPersonalKeyManagement() {
 
   // Giao diện khi chưa có khóa
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h3 className="text-xl font-bold text-[#001C44] mb-4">Generate Your RSA Key Pair</h3>
-      <p className="text-gray-600 mb-6 text-sm">Create a secure 2048-bit RSA key pair. Your private key will be encrypted with a passphrase that only you know.</p>
-      <form onSubmit={handleGenerateKeys} className="space-y-4">
-        <div>
-          <Label htmlFor="passphrase">Enter a Strong Passphrase</Label>
-          <Input 
-            id="passphrase"
-            type="password"
-            value={passphrase}
-            onChange={(e) => setPassphrase(e.target.value)}
-            placeholder="At least 8 characters"
-            className="mt-1"
-          />
-        </div>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? <LoaderCircle className="animate-spin" /> : "Generate & Save Keys"}
-        </Button>
-      </form>
-    </div>
+    <>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-xl font-bold text-[#001C44] mb-4">Generate Your RSA Key Pair</h3>
+        <p className="text-gray-600 mb-6 text-sm">Create a secure 2048-bit RSA key pair. Your private key will be encrypted with a passphrase that only you know.</p>
+        <form onSubmit={handleGenerateKeys} className="space-y-4">
+          <div>
+            <Label 
+              htmlFor="passphrase" 
+              className="text-sm font-medium text-[#001C44]"
+            >
+              Enter a Strong Passphrase
+            </Label>
+
+            <div className="relative mt-1">
+              <Input 
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password here"
+                className="mt-1 bg-[#F3F4F6] placeholder-[#9095A1] text-[#001C44] pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
+              >
+                {showPassword ? (
+                  <Eye className="h-5 w-5 text-[#001C44]" />
+                ) : (
+                  <EyeOff className="h-5 w-5 text-[#001C44]" />
+                )}
+              </button>
+            </div>
+          </div>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <Button type="submit" className="w-full bg-[#2D99AE] hover:bg-[#0C5776] text-[#F3F4F6]" disabled={isLoading}>
+            {isLoading ? <LoaderCircle className="animate-spin" /> : "Generate & Save Keys"}
+          </Button>
+        </form>
+      </div>
+
+      {/* Render modal lỗi */}
+      <ErrorModal
+        isOpen={isErrorModalOpen}
+        onClose={() => {
+          setIsErrorModalOpen(false);
+          // Tùy chọn: Xóa thông báo lỗi cũ khi đóng modal
+          setError(""); 
+        }}
+        errorMessage={error}
+      />          
+    </>
   );
 }
