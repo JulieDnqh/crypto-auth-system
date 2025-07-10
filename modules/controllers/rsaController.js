@@ -2,7 +2,7 @@
 const prisma = require('../config/db');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
-const { encryptPrivateKey } = require('../utils/cryptoHelpers');
+const { encryptPrivateKey, decryptPrivateKey } = require('../utils/cryptoHelpers');
 
 // Hàm helper để mã hóa private key
 // const encryptPrivateKey = (privateKey, passphrase) => {
@@ -149,5 +149,45 @@ exports.deleteKey = async (req, res) => {
     } catch (error) {
         console.error("Lỗi khi xóa khóa:", error);
         res.status(500).json({ message: 'Internal server error.' });
+    }
+};
+
+exports.verifyPrivateKeyAccess = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const { password } = req.body;
+
+        if (!password) {
+            return res.status(400).json({ message: "Password is required." });
+        }
+
+        const userKey = await prisma.rSAKey.findUnique({
+            where: { userId }
+        });
+
+        if (!userKey) {
+            return res.status(404).json({ message: "No RSA key found." });
+        }
+
+        // Thử giải mã Private Key bằng mật khẩu được cung cấp
+        // Hàm decryptPrivateKey sẽ ném lỗi nếu giải mã thất bại
+        const decryptedKey = decryptPrivateKey(
+            userKey.encryptedPrivateKey,
+            password,
+            userKey.passphraseSalt,
+            userKey.iv
+        );
+
+        // Nếu không có lỗi, có nghĩa là giải mã thành công
+        res.status(200).json({ 
+            message: "Verification successful! The provided password can decrypt the private key.",
+            // Chỉ trả về một phần nhỏ của private key để xác nhận, không bao giờ trả về toàn bộ
+            privateKeySnippet: decryptedKey.substring(0, 50) + "..."
+        });
+
+    } catch (error) {
+        // Lỗi từ decryptPrivateKey sẽ được bắt ở đây
+        console.error("Verification failed:", error.message);
+        res.status(401).json({ message: "Verification failed. Incorrect password." });
     }
 };

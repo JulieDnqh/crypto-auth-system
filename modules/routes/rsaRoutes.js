@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { generateKeys, getKeyStatus, deleteKey } = require('../controllers/rsaController');
+const { generateKeys, getKeyStatus, deleteKey, verifyPrivateKeyAccess } = require('../controllers/rsaController');
 const { getAuth } = require("../middleware/authMiddleware");
 
 // Route để tạo cặp khóa mới
@@ -10,5 +10,7 @@ router.post('/generate', getAuth, generateKeys);
 router.get('/status', getAuth, getKeyStatus);
 
 router.delete('/delete', getAuth, deleteKey);
+
+router.post('/verify-access', getAuth, verifyPrivateKeyAccess);
 
 module.exports = router;

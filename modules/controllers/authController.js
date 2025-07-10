@@ -157,6 +157,8 @@ const signinStep1 = async (req, res) => {
     const now = new Date();
     const otpExpiresAt = new Date(now.getTime() + 5 * 60 * 1000); // OTP hết hạn sau 5 phút
 
+    console.log(`Generated OTP for ${email}: ${otp}`);
+
     // 4. Lưu OTP và thời gian vào database
     await prisma.user.update({
       where: { email },
@@ -328,11 +330,19 @@ const changePassword = async (req, res) => {
 
         // 1. Lấy thông tin user và khóa RSA của họ
         const user = await prisma.user.findUnique({
-            where: { id: userId },
-            include: { keys: true } // Lấy cả thông tin khóa RSA
+            where: { id: userId }
+        });
+
+        // Tìm khóa duy nhất của user
+        const userKey = await prisma.rSAKey.findUnique({
+            where: { userId: userId }
         });
 
         if (!user) { return res.status(404).json({ message: "User not found." }); }
+
+        if (userKey.length === 0) {
+            return res.status(404).json({ message: "No RSA key found for this user." });
+        }
 
         // 2. Xác thực mật khẩu cũ
         const isOldPasswordCorrect = await bcrypt.compare(oldPassword, user.passwordHash);
@@ -345,7 +355,7 @@ const changePassword = async (req, res) => {
         const newPasswordHash = await bcrypt.hash(newPassword, newSalt);
 
         // 4. Mã hóa lại Private Key nếu có
-        const userKey = user.keys.length > 0 ? user.keys[0] : null;
+        // const userKey = user.rsaKey.length > 0 ? user.rsaKey[0] : null;
         let updatedEncryptedPrivateKey;
 
         if (userKey) {
@@ -370,6 +380,25 @@ const changePassword = async (req, res) => {
                     iv: reEncrypted.iv                  // <-- Cập nhật iv mới
                 }
             });
+
+            // Kiểm tra cập nhật private key ===
+            console.log("--- Bắt đầu kiểm tra giải mã bằng mật khẩu MỚI ---");
+            try {
+              const testDecryption = decryptPrivateKey(
+                  reEncrypted.encryptedData,
+                  newPassword, // Dùng mật khẩu MỚI
+                  reEncrypted.salt,
+                  reEncrypted.iv
+              );
+              // So sánh với private key gốc
+              if (testDecryption === decryptedPrivateKey) {
+                  console.log("✅ KIỂM TRA THÀNH CÔNG: Private key đã được mã hóa lại và có thể giải mã bằng mật khẩu mới.");
+              } else {
+                  console.error("❌ LỖI LOGIC: Giải mã thành công nhưng kết quả không khớp!");
+              }
+            } catch (testError) {
+              console.error("❌ LỖI NGHIÊM TRỌNG: Không thể giải mã private key bằng mật khẩu mới ngay sau khi mã hóa!", testError);
+            }
         }
 
         // 5. Cập nhật mật khẩu mới cho user
@@ -382,7 +411,7 @@ const changePassword = async (req, res) => {
         });
         
         // Ghi log (ví dụ)
-        console.log(`User ${userId} changed their password/passphrase.`);
+        console.log(`User ${userId} changed their password.`);
 
         res.status(200).json({ message: "Password updated successfully." });
 

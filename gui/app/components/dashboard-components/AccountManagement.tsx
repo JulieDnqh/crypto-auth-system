@@ -113,15 +113,47 @@ export default function AccountManagement({ currentUser, onProfileUpdate }: Acco
   };
   
   const handleChangePassword = async (e: React.FormEvent) => {
-      e.preventDefault();
-      setPasswordMessage({ type: "", text: "" });
-      
-      if (passwords.newPassword !== passwords.confirmNewPassword) {
-        setPasswordMessage({ type: "error", text: "New password and confirmation do not match." });
-        return;
+    e.preventDefault();
+    setPasswordMessage({ type: "", text: "" });
+    
+    if (passwords.newPassword.length < 8) {
+      setPasswordMessage({ type: "error", text: "New password must be at least 8 characters long." });
+      return;
+    }
+    if (passwords.newPassword !== passwords.confirmNewPassword) {
+      setPasswordMessage({ type: "error", text: "New password and confirmation do not match." });
+      return;
     }
 
     setLoadingPassword(true);
+
+    try {
+      const token = localStorage.getItem('jwtToken'); // Dùng tên token đã thống nhất
+      const response = await fetch('http://localhost:5000/api/auth/password', {
+          method: 'PUT',
+          headers: { 
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+              oldPassword: passwords.oldPassword,
+              newPassword: passwords.newPassword
+          })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+          setPasswordMessage({ type: 'success', text: data.message });
+          // Xóa các ô password sau khi thành công
+          setPasswords({ oldPassword: "", newPassword: "", confirmNewPassword: "" });
+      } else {
+          setPasswordMessage({ type: 'error', text: data.message });
+      }
+    } catch (err) {
+        setPasswordMessage({ type: 'error', text: 'Failed to connect to the server.' });
+    } finally {
+        setLoadingPassword(false); // Luôn tắt loading khi kết thúc
+    }
   };
 
   // Nếu chưa có dữ liệu để điền vào form, hiển thị loading
@@ -252,7 +284,7 @@ export default function AccountManagement({ currentUser, onProfileUpdate }: Acco
               <Input 
                 id="newPassword" 
                 name="newPassword" 
-                type="password"
+                type={showNewPassword ? "text" : "password"}
                 className="mt-1 w-full bg-[#F3F4F6] placeholder-[#9095A1] text-[#001C44]"
                 placeholder="Enter your new password (at least 8 characters)"
                 value={passwords.newPassword}
