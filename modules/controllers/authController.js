@@ -332,8 +332,6 @@ const changePassword = async (req, res) => {
         const user = await prisma.user.findUnique({
             where: { id: userId }
         });
-
-        // Tìm khóa duy nhất của user
         const userKey = await prisma.rSAKey.findUnique({
             where: { userId: userId }
         });

@@ -5,7 +5,7 @@ import { User, Key, FileText, Shield } from "lucide-react";
 // Import các component tính năng của bạn
 import RSAPersonalKeyManagement from "@/app/components/dashboard-components/KeyManagement";
 import AccountManagement from "@/app/components/dashboard-components/AccountManagement";
-// ... import các component khác ...
+import SearchPublicKey from "@/app/components/dashboard-components/SearchPublicKey";
 
 // --- ĐỊNH NGHĨA CẤU TRÚC DỮ LIỆU ---
 export interface FeatureItem {
@@ -39,14 +39,24 @@ export const commonFeaturesConfig: FeatureMenu[] = [
     items: [
       { key: "rsa-personal", label: "Quản lý khoá RSA cá nhân", path: "rsa-personal-key" },
       { key: "qr-public", label: "QR Code Public Key", path: "qr-public-key" },
-      { key: "search-public", label: "Tìm kiếm public key", path: "search-public-key" },
+      // { key: "search-public", label: "Tìm kiếm public key", path: "search-public-key" },
     ],
   },
   // ... các menu khác
 ];
 
 export const adminFeaturesConfig: FeatureMenu[] = [
-  // ... định nghĩa các menu của admin ở đây
+    {
+      name: "Quản trị hệ thống",
+      key: "admin",
+      icon: <Shield className="w-5 h-5" />,
+      items: [
+        { key: "admin-roles", label: "Phân quyền tài khoản", path: "manage-roles" },
+        { key: "admin-logs", label: "Ghi log bảo mật", path: "view-logs" },
+        // Thêm mục tìm kiếm
+        { key: "admin-search", label: "Tìm kiếm public key", path: "search-public-key" },
+      ],
+    },
 ];
 
 
@@ -60,5 +70,5 @@ type FeatureComponentMap = {
 export const featureComponents: FeatureComponentMap = {
   "rsa-personal-key": RSAPersonalKeyManagement,
   "account-management": AccountManagement,
-  // ... thêm các component khác vào đây
+  "search-public-key": SearchPublicKey,
 };

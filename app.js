@@ -16,6 +16,9 @@ app.use("/api/auth", authRoutes); // Tất cả các route trong authRoutes sẽ
 const rsaRoutes = require('./modules/routes/rsaRoutes');
 app.use('/api/rsa', rsaRoutes);
 
+const userRoutes = require('./modules/routes/userRoutes');
+app.use('/api/users', userRoutes);
+
 app.listen(port, () => {
   console.log(`Backend server is running on http://localhost:${port}`);
 });
