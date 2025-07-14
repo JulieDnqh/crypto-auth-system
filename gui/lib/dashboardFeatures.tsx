@@ -6,6 +6,7 @@ import { User, Key, FileText, Shield } from "lucide-react";
 import RSAPersonalKeyManagement from "@/app/components/dashboard-components/KeyManagement";
 import AccountManagement from "@/app/components/dashboard-components/AccountManagement";
 import SearchPublicKey from "@/app/components/dashboard-components/SearchPublicKey";
+import QRCodeGenerator from "@/app/components/dashboard-components/QRCodeGenerator"; // Import the new component
 
 // --- ĐỊNH NGHĨA CẤU TRÚC DỮ LIỆU ---
 export interface FeatureItem {
@@ -38,7 +39,7 @@ export const commonFeaturesConfig: FeatureMenu[] = [
     icon: <Key className="w-5 h-5" />,
     items: [
       { key: "rsa-personal", label: "Personal RSA Key", path: "rsa-personal-key" },
-      { key: "qr-public", label: "QR Code Public Key", path: "qr-public-key" },
+      { key: "qr-public", label: "QR Code Public Key", path: "qr-code-generator" },
       { key: "search-public", label: "Tìm kiếm public key", path: "search-public-key" },
     ],
   },
@@ -71,4 +72,5 @@ export const featureComponents: FeatureComponentMap = {
   "rsa-personal-key": RSAPersonalKeyManagement,
   "account-management": AccountManagement,
   "search-public-key": SearchPublicKey,
+  "qr-code-generator": QRCodeGenerator,
 };
