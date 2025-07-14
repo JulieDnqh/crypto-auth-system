@@ -2,6 +2,7 @@ const qrcode = require('qrcode');
 const jsqr = require("jsqr");
 const { createCanvas, loadImage } = require('canvas');
 const prisma = require('../config/db');
+const log = require('../utils/logger');
 
 exports.generateQrCode = async (req, res) => {
     try {
@@ -30,10 +31,12 @@ exports.generateQrCode = async (req, res) => {
         // Tạo QR code dưới dạng Data URL
         const qrCodeUrl = await qrcode.toDataURL(qrData);
 
+        log(userEmail, 'Generate QR Code', 'Success', 'QR code generated successfully');
         res.status(200).json({ qrCodeUrl });
 
     } catch (error) {
         console.error("Error generating QR code:", error);
+        log(req.user.email, 'Generate QR Code', 'Failed', error.message);
         res.status(500).json({ message: 'Internal server error.' });
     }
 };
@@ -56,17 +59,21 @@ exports.decodeQrCode = async (req, res) => {
         if (code) {
             try {
                 const decodedData = JSON.parse(code.data);
+                log(req.user.email, 'Decode QR Code', 'Success', 'QR code decoded successfully');
                 res.status(200).json({ decodedData });
             } catch (parseError) {
                 // If it's not JSON, return as plain text
+                log(req.user.email, 'Decode QR Code', 'Success', 'QR code decoded as plain text');
                 res.status(200).json({ decodedData: code.data });
             }
         } else {
+            log(req.user.email, 'Decode QR Code', 'Failed', 'No QR code found in the image');
             res.status(400).json({ message: 'No QR code found in the image.' });
         }
 
     } catch (error) {
         console.error("Error decoding QR code:", error);
+        log(req.user.email, 'Decode QR Code', 'Failed', error.message);
         res.status(500).json({ message: 'Internal server error.' });
     }
 };

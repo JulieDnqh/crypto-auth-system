@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken"); // Cần cài đặt: npm install jsonwebto
 const nodemailer = require("nodemailer");
 const crypto = require('crypto');
 const { encryptPrivateKey, decryptPrivateKey } = require('../utils/cryptoHelpers');
+const log = require('../utils/logger');
 
 // Hàm xử lý đăng ký
 const signup = async (req, res) => {
@@ -90,11 +91,13 @@ const signup = async (req, res) => {
     delete userResponse.passwordSalt;
 
     console.log("✅ [Success] User created with id:", newUser.id);
+    log(email, 'Signup', 'Success', 'User created successfully');
     res
       .status(201)
       .json({ message: "Sign Up successfully!", user: userResponse, recoveryCode: recoveryCode });
   } catch (error) {
     console.error("Lỗi khi đăng ký:", error);
+    log(email, 'Signup', 'Failed', error.message);
     res.status(500).json({ message: "Lỗi máy chủ nội bộ." });
   }
 };
@@ -107,12 +110,14 @@ const signin = async (req, res) => {
     // 1. Tìm user trong DB
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
+      log(email, 'Signin', 'Failed', 'Invalid email or password');
       return res.status(401).json({ message: "Invalid email or password." });
     }
 
     // 2. So khớp mật khẩu
     const isPasswordCorrect = await bcrypt.compare(password, user.passwordHash);
     if (!isPasswordCorrect) {
+      log(email, 'Signin', 'Failed', 'Invalid email or password');
       return res.status(401).json({ message: "Invalid email or password." });
     }
 
@@ -124,6 +129,7 @@ const signin = async (req, res) => {
     );
 
     // 4. Trả về token và thông tin user
+    log(email, 'Signin', 'Success', 'User logged in successfully');
     res.status(200).json({
       message: "Login successful!",
       token: token,
@@ -140,6 +146,7 @@ const signin = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in signin:", error);
+    log(req.body.email, 'Signin', 'Failed', error.message);
     res.status(500).json({ message: "Internal server error." });
   }
 };
@@ -151,12 +158,14 @@ const signinStep1 = async (req, res) => {
     // 1. Tìm user trong DB
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
+      log(email, 'Signin Step 1', 'Failed', 'Invalid email or password');
       return res.status(401).json({ message: "Invalid email or password." });
     }
 
     // 2. So khớp mật khẩu
     const isPasswordCorrect = await bcrypt.compare(password, user.passwordHash);
     if (!isPasswordCorrect) {
+      log(email, 'Signin Step 1', 'Failed', 'Invalid email or password');
       return res.status(401).json({ message: "Invalid email or password." });
     }
 
@@ -180,9 +189,11 @@ const signinStep1 = async (req, res) => {
     // Gọi hàm gửi email
     await sendOtpEmail(user.email, otp);
 
+    log(email, 'Signin Step 1', 'Success', 'OTP sent');
     res.status(200).json({ message: "OTP has been sent to your email." });
   } catch (error) {
     console.error("Error in signin step 1:", error);
+    log(req.body.email, 'Signin Step 1', 'Failed', error.message);
     res.status(500).json({ message: "Lỗi máy chủ nội bộ." });
   }
 };
@@ -203,6 +214,7 @@ const verifyOtp = async (req, res) => {
     // === XỬ LÝ KHI OTP HẾT HẠN ===
     // Chỉ thông báo, không tạo mã mới
     if (user.otpExpiresAt < now) {
+      log(email, 'Verify OTP', 'Failed', 'OTP expired');
       return res
         .status(400)
         .json({ message: "OTP has expired. Please request a new one." });
@@ -210,6 +222,7 @@ const verifyOtp = async (req, res) => {
 
     // === XỬ LÝ KHI OTP SAI ===
     if (user.otp !== otp) {
+      log(email, 'Verify OTP', 'Failed', 'Incorrect OTP');
       return res.status(400).json({ message: "Incorrect OTP." });
     }
 
@@ -228,6 +241,7 @@ const verifyOtp = async (req, res) => {
     );
 
     // 4. Trả về token và thông tin user (giữ nguyên cấu trúc user)
+    log(email, 'Verify OTP', 'Success', 'OTP verified successfully');
     res.status(200).json({
       message: "Login successful!",
       token: token, // Include the token here
@@ -240,6 +254,7 @@ const verifyOtp = async (req, res) => {
     });
   } catch (error) {
     console.error("Error verifying OTP:", error);
+    log(req.body.email, 'Verify OTP', 'Failed', error.message);
     res.status(500).json({ message: "Lỗi máy chủ nội bộ." });
   }
 };
@@ -323,6 +338,7 @@ const updateUserProfile = async (req, res) => {
 
     } catch (error) {
         console.error("Error updating profile:", error);
+        log(req.user.email, 'Update Profile', 'Failed', error.message);
         res.status(500).json({ message: "Internal server error." });
     }
 };
@@ -418,11 +434,13 @@ const changePassword = async (req, res) => {
         
         // Ghi log (ví dụ)
         console.log(`User ${userId} changed their password.`);
+        log(req.user.email, 'Change Password', 'Success', 'Password updated successfully');
 
         res.status(200).json({ message: "Password updated successfully." });
 
     } catch (error) {
         console.error("Error changing password:", error);
+        log(req.user.email, 'Change Password', 'Failed', error.message);
         // Kiểm tra lỗi giải mã đặc biệt
         if (error.message.includes('bad decrypt')) {
             return res.status(400).json({ message: "Decryption failed. The old password might be incorrect."});
@@ -521,9 +539,11 @@ const recoverAccount = async (req, res) => {
       });
 
       res.status(200).json({ message: "Password has been reset successfully. Your old recovery code is now invalid. Please log in." });
+      log(email, 'Account Recovery', 'Success', 'Password reset successfully');
 
   } catch (error) {
       console.error("Error during account recovery:", error);
+      log(req.body.email, 'Account Recovery', 'Failed', error.message);
       res.status(500).json({ message: "Internal server error." });
   }
 };

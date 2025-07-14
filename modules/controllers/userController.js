@@ -1,4 +1,5 @@
 const prisma = require('../config/db');
+const log = require('../utils/logger');
 
 exports.findUserPublicKey = async (req, res) => {
     try {
@@ -52,9 +53,11 @@ exports.findUserPublicKey = async (req, res) => {
             expiresAt: userKey.expiresAt,
             expiresInDays: expiresInDays > 0 ? expiresInDays : 0,
         });
+        log(email, 'Find User Public Key', 'Success', 'Public key found');
 
     } catch (error) {
         console.error("Error finding user public key:", error);
+        log(req.query.email, 'Find User Public Key', 'Failed', error.message);
         res.status(500).json({ message: 'Internal server error.' });
     }
 };
