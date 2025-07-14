@@ -229,7 +229,7 @@ export default function SignInPage() {
 
                   <div className="flex items-center justify-end">
                     <Link
-                      href="#"
+                      href="/forgot-password"
                       className="text-sm text-[#0C5776] hover:underline"
                     >
                       Forgot password?
@@ -243,12 +243,12 @@ export default function SignInPage() {
                       Remember me
                     </label>
                   </div> */}
-                    <Link
+                    {/* <Link
                       href="#"
                       className="text-sm text-[#0C5776] hover:underline"
                     >
                       Forgot password?
-                    </Link>
+                    </Link> */}
                   </div>
 
                   <Button

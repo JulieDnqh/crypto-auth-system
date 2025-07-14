@@ -8,13 +8,19 @@ import { Input } from "../components/input"
 import { Label } from "../components/label"
 import { Checkbox } from "../components/checkbox"
 import { SuccessModal } from "../components/SuccessModal"
+import { RecoveryCodeModal } from "../components/RecoveryCodeModal"
 import { Eye, EyeOff } from "lucide-react"
 import toast from 'react-hot-toast'; // Import toast
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  const [recoveryCode, setRecoveryCode] = useState("")
+  const [isRecoveryModalOpen, setIsRecoveryModalOpen] = useState(false)
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -101,7 +107,9 @@ export default function SignUpPage() {
 
       if (response.ok) {
         setIsSuccessModalOpen(true);
-        toast.success("Registration successful!"); 
+        toast.success("Registration successful!");
+        setRecoveryCode(result.recoveryCode);
+        setIsRecoveryModalOpen(true);
       } else {
         toast.error(`Registration failed: ${result.message || 'An error occurred'}`); 
       }
@@ -358,6 +366,15 @@ export default function SignUpPage() {
         isOpen={isSuccessModalOpen} 
         onClose={() => setIsSuccessModalOpen(false)} 
     />
+
+    <RecoveryCodeModal 
+        isOpen={isRecoveryModalOpen}
+        code={recoveryCode}
+        onClose={() => {
+            setIsRecoveryModalOpen(false);
+        }}
+    />
+
     </>
   )
 }

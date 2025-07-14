@@ -1,106 +1,242 @@
-import { useState, useEffect } from "react";
-import QRCode from "qrcode.react";
+// 'use client';
 
-const QRCodePublicKey = () => {
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputPublicKey, setInputPublicKey] = useState("");
-  const [generatedQrData, setGeneratedQrData] = useState("");
-  const [generatedCreationDate, setGeneratedCreationDate] = useState("");
+// import { useState, useEffect, useRef, useCallback } from 'react';
+// import { QRCodeCanvas } from 'qrcode.react';
+// import useAuth from '@/lib/hooks/useAuth';
+// import { ErrorModal } from '@/app/components/ErrorModal';
+// import { Sidebar } from '@/app/components/dashboard-components/Sidebar';
+// import LogoutButton from '@/app/components/LogoutButton';
+// import { useRouter } from 'next/navigation';
+// import jsQR from 'jsqr';
 
-  const handleGenerateQrCode = () => {
-    if (!inputEmail || !inputPublicKey) {
-      alert("Please enter both email and public key.");
-      return;
-    }
+// const QRCodePage = () => {
+//   useAuth(); // Protect the route
 
-    const today = new Date();
-    const dateString = today.toLocaleDateString();
-    setGeneratedCreationDate(dateString);
+//   const [qrData, setQrData] = useState<any>(null);
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [error, setError] = useState('');
+//   const [isAdmin, setIsAdmin] = useState(false);
+//   const qrCodeRef = useRef<HTMLDivElement>(null);
+//   const router = useRouter();
 
-    const dataToEncode = JSON.stringify({
-      email: inputEmail,
-      date: dateString,
-      publicKey: inputPublicKey,
-    });
-    setGeneratedQrData(dataToEncode);
-  };
+//   // State for QR Code Reader
+//   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+//   const [decodedQRData, setDecodedQRData] = useState<any>(null);
+//   const [readerError, setReaderError] = useState<string | null>(null);
 
-  return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-[#001C44] mb-4">
-        QR Code Public Key
-      </h2>
-      <p className="text-gray-700 mb-4">
-        Enter your email and public key to generate a QR code.
-      </p>
+//   useEffect(() => {
+//     const fetchKeyAndUserData = async () => {
+//       const token = localStorage.getItem('jwtToken');
+//       if (!token) {
+//         setIsLoading(false);
+//         router.push('/signin');
+//         return;
+//       }
 
-      <div className="mb-4">
-        <label
-          htmlFor="emailInput"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Email:
-        </label>
-        <input
-          type="email"
-          id="emailInput"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          value={inputEmail}
-          onChange={(e) => setInputEmail(e.target.value)}
-          placeholder="your.email@example.com"
-        />
-      </div>
+//       try {
+//         // Fetch user data to determine role for sidebar
+//         const userRes = await fetch('http://localhost:5000/api/auth/dashboard', {
+//           headers: { Authorization: `Bearer ${token}` },
+//         });
+//         if (!userRes.ok) throw new Error('Failed to fetch user data.');
+//         const userData = await userRes.json();
+//         setIsAdmin(userData.user.role === 'admin');
 
-      <div className="mb-4">
-        <label
-          htmlFor="publicKeyInput"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Public Key:
-        </label>
-        <textarea
-          id="publicKeyInput"
-          rows={5}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          value={inputPublicKey}
-          onChange={(e) => setInputPublicKey(e.target.value)}
-          placeholder="-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----"
-        ></textarea>
-      </div>
+//         // Fetch key status for QR code
+//         const keyRes = await fetch('http://localhost:5000/api/rsa/status', {
+//           headers: { Authorization: `Bearer ${token}` },
+//         });
 
-      <button
-        onClick={handleGenerateQrCode}
-        className="px-4 py-2 bg-[#2D99AE] text-white rounded-md hover:bg-[#0C5776] focus:outline-none focus:ring-2 focus:ring-[#2D99AE] focus:ring-offset-2"
-      >
-        Generate QR Code
-      </button>
+//         if (!keyRes.ok) {
+//           const errorData = await keyRes.json();
+//           throw new Error(errorData.message || 'Failed to fetch key status.');
+//         }
 
-      {generatedQrData && (
-        <div className="mt-6 flex flex-col items-center justify-center p-4 border border-gray-300 rounded-md bg-gray-50">
-          <QRCode
-            value={generatedQrData}
-            size={256}
-            level="H"
-            includeMargin={true}
-          />
-          <p className="mt-4 text-sm text-gray-600">
-            Scan this QR code to share your public key.
-          </p>
-          <div className="mt-4 text-sm text-gray-700">
-            <p>
-              <strong>Email:</strong> {inputEmail}
-            </p>
-            <p>
-              <strong>Creation Date:</strong> {generatedCreationDate}
-            </p>
-            <p>
-              <strong>Public Key:</strong> {inputPublicKey.substring(0, 50)}...
-            </p>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
+//         const keyData = await keyRes.json();
+//         if (keyData.hasKey) {
+//           const qrPayload = {
+//             email: keyData.email,
+//             publicKey: keyData.publicKey,
+//             createdAt: new Date(keyData.createdAt).toLocaleDateString(),
+//           };
+//           setQrData(qrPayload);
+//         }
+//       } catch (err: any) {
+//         setError(err.message || 'An error occurred.');
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
 
-export default QRCodePublicKey;
+//     fetchKeyAndUserData();
+//   }, [router]);
+
+//   const downloadQRCode = () => {
+//     if (qrCodeRef.current) {
+//       // Find the actual canvas element generated by QRCodeCanvas
+//       const qrCanvas = qrCodeRef.current.querySelector('canvas');
+//       if (qrCanvas) {
+//         const padding = 40; // Increased padding for better quiet zone
+//         const qrSize = qrCanvas.width; // Assuming width and height are same
+//         const newSize = qrSize + 2 * padding;
+
+//         const tempCanvas = document.createElement('canvas');
+//         tempCanvas.width = newSize;
+//         tempCanvas.height = newSize;
+//         const ctx = tempCanvas.getContext('2d');
+
+//         // Fill background with white (or any color you want for the padding area)
+//         ctx!.fillStyle = 'white';
+//         ctx!.fillRect(0, 0, newSize, newSize);
+
+//         // Draw the QR code onto the new canvas with padding
+//         ctx!.drawImage(qrCanvas, padding, padding, qrSize, qrSize);
+
+//         const pngUrl = tempCanvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+//         let downloadLink = document.createElement('a');
+//         downloadLink.href = pngUrl;
+//         downloadLink.download = `${qrData.email}_public_key.png`;
+//         document.body.appendChild(downloadLink);
+//         downloadLink.click();
+//         document.body.removeChild(downloadLink);
+//       }
+//     }
+//   };
+
+//   const handleItemClick = (path: string) => {
+//     if (path.startsWith('/')) {
+//         router.push(path);
+//     } 
+//     else {
+//         router.push(`/dashboard?feature=${path}`);
+//     }
+//   };
+
+//   const handleImageUpload = useCallback((event) => {
+//     setReaderError(null);
+//     setDecodedQRData(null);
+//     const file = event.target.files[0];
+//     if (!file) return;
+
+//     const reader = new FileReader();
+//     reader.onload = (e) => {
+//       const img = new Image();
+//       img.onload = () => {
+//         const canvas = document.createElement('canvas');
+//         const context = canvas.getContext('2d');
+//         canvas.width = img.width;
+//         canvas.height = img.height;
+//         context!.drawImage(img, 0, 0, img.width, img.height);
+//         const imageData = context!.getImageData(0, 0, img.width, img.height);
+
+//         const code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "attemptBoth" });
+
+//         if (code) {
+//           try {
+//             const parsedData = JSON.parse(code.data);
+//             setDecodedQRData(parsedData);
+//           } catch (parseError) {
+//             setReaderError('Could not parse QR code data as JSON. Raw data: ' + code.data);
+//           }
+//         } else {
+//           setReaderError('No QR code found in the image.');
+//         }
+//         setUploadedImage(img.src);
+//       };
+//       img.onerror = () => {
+//         setReaderError('Could not load image.');
+//       };
+//       img.src = e.target!.result as string;
+//     };
+//     reader.readAsDataURL(file);
+//   }, []);
+
+//   return (
+//     <div className="flex h-screen bg-gray-100">
+//         <Sidebar isAdmin={isAdmin} onItemClick={handleItemClick} />
+//         <div className="flex-1 flex flex-col">
+//             <header className="bg-white shadow p-4 flex justify-between items-center">
+//                 <h1 className="text-xl font-semibold text-[#001C44]">Public Key QR Code</h1>
+//                 <LogoutButton />
+//             </header>
+//             <main className="flex-1 p-6 overflow-y-auto">
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//                     {/* QR Code Generator Section */}
+//                     <div className="p-6 bg-white rounded-lg shadow-md">
+//                         <h2 className="text-2xl font-bold text-[#001C44] mb-4">Your Public Key QR Code</h2>
+//                         {error && <ErrorModal isOpen={!!error} errorMessage={error} onClose={() => setError('')} />}
+
+//                         {isLoading ? (
+//                             <p>Loading QR Code...</p>
+//                         ) : qrData ? (
+//                             <div ref={qrCodeRef} className="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-md bg-gray-50">
+//                                 <div className="p-2 border-2 border-[#0C5776] rounded-md"> {/* Added a more prominent border */}
+//                                     <QRCodeCanvas value={JSON.stringify(qrData)} size={200} level={"H"} includeMargin={true} />
+//                                 </div>
+                                
+//                                 <div className="mt-4 text-sm text-gray-700 text-center">
+//                                     <p><strong>Email:</strong> {qrData.email}</p>
+//                                     <p><strong>Created On:</strong> {qrData.createdAt}</p>
+//                                     <p className="mt-2">Scan this QR code to share your public key.</p>
+//                                 </div>
+//                                 <button onClick={downloadQRCode} className="mt-4 px-4 py-2 bg-[#2D99AE] text-white rounded-md hover:bg-[#0C5776]">
+//                                     Download QR Code
+//                                 </button>
+//                             </div>
+//                         ) : (
+//                             <div className="text-center p-4 border-dashed border-2 border-gray-300 rounded-md">
+//                                 <p className="text-gray-600">No RSA key found for your account.</p>
+//                                 <p className="text-sm text-gray-500 mt-2">Please go to the Key Management section to generate a new key pair.</p>
+//                             </div>
+//                         )}
+//                     </div>
+
+//                     {/* QR Code Reader Section */}
+//                     <div className="p-6 bg-white rounded-lg shadow-md">
+//                         <h2 className="text-2xl font-bold text-[#001C44] mb-4">QR Code Reader</h2>
+//                         <p className="text-gray-700 mb-4">Upload an image containing a QR code to decode its content.</p>
+                        
+//                         <input 
+//                             type="file" 
+//                             accept="image/*" 
+//                             onChange={handleImageUpload}
+//                             className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
+//                         />
+
+//                         {readerError && <ErrorModal isOpen={!!readerError} errorMessage={readerError} onClose={() => setReaderError(null)} />}
+
+//                         {uploadedImage && (
+//                             <div className="mt-6">
+//                                 <h3 className="text-lg font-semibold text-[#001C44] mb-2">Uploaded Image:</h3>
+//                                 <img src={uploadedImage} alt="Uploaded QR Code" className="max-w-full h-auto rounded-md border border-gray-300" />
+//                             </div>
+//                         )}
+
+//                         {decodedQRData && (
+//                             <div className="mt-6 p-4 bg-gray-50 border border-gray-300 rounded-md text-gray-800">
+//                                 <h3 className="text-lg font-semibold text-[#001C44] mb-2">Decoded QR Data:</h3>
+//                                 <p><strong className="text-[#0C5776]">Email:</strong> {decodedQRData.email}</p>
+//                                 <p><strong className="text-[#0C5776]">Public Key:</strong></p>
+//                                 <pre className="bg-gray-100 p-2 rounded text-xs overflow-x-auto">{decodedQRData.publicKey || 'N/A'}</pre>
+//                                 <p><strong className="text-[#0C5776]">Created On:</strong> {decodedQRData.createdAt}</p>
+//                                 {/* Add a button to save this public key to your saved keys list */}
+//                                 <button onClick={() => {
+//                                     if (decodedQRData) {
+//                                         console.log("Decoded QR Data:", decodedQRData);
+//                                     } else {
+//                                         console.log("No decoded QR data available.");
+//                                     }
+//                                 }} className="mt-4 px-4 py-2 bg-[#2D99AE] text-white rounded-md hover:bg-[#0C5776]">
+//                                     Copy Public Key
+//                                 </button>
+//                             </div>
+//                         )}
+//                     </div>
+//                 </div>
+//             </main>
+//         </div>
+//     </div>
+//   );
+// };
+
+// export default QRCodePage;

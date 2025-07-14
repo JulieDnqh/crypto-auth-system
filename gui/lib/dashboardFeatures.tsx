@@ -24,22 +24,22 @@ export interface FeatureMenu {
 // --- ĐỊNH NGHĨA CÁC MENU ---
 export const commonFeaturesConfig: FeatureMenu[] = [
   {
-    name: "Quản lý tài khoản",
+    name: "Account Management",
     key: "account",
     icon: <User className="w-5 h-5" />,
     items: [
-      { key: "acc-update", label: "Cập nhật thông tin", path: "account-management" },
-      { key: "acc-recover", label: "Khôi phục tài khoản", path: "account-recovery" },
+      { key: "acc-update", label: "Update Account Information", path: "account-management" },
+      { key: "acc-recover", label: "Account Recovery", path: "account-recovery" },
     ],
   },
   {
-    name: "Quản lý khoá",
+    name: "Key Management",
     key: "keys",
     icon: <Key className="w-5 h-5" />,
     items: [
-      { key: "rsa-personal", label: "Quản lý khoá RSA cá nhân", path: "rsa-personal-key" },
+      { key: "rsa-personal", label: "Personal RSA Key", path: "rsa-personal-key" },
       { key: "qr-public", label: "QR Code Public Key", path: "qr-public-key" },
-      // { key: "search-public", label: "Tìm kiếm public key", path: "search-public-key" },
+      { key: "search-public", label: "Tìm kiếm public key", path: "search-public-key" },
     ],
   },
   // ... các menu khác
@@ -54,7 +54,7 @@ export const adminFeaturesConfig: FeatureMenu[] = [
         { key: "admin-roles", label: "Phân quyền tài khoản", path: "manage-roles" },
         { key: "admin-logs", label: "Ghi log bảo mật", path: "view-logs" },
         // Thêm mục tìm kiếm
-        { key: "admin-search", label: "Tìm kiếm public key", path: "search-public-key" },
+        // { key: "admin-search", label: "Tìm kiếm public key", path: "search-public-key" },
       ],
     },
 ];
