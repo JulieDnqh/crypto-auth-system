@@ -85,7 +85,15 @@ const FileProcessing = () => {
         try {
             // Bước 1: Gọi API backend để lấy public key của người nhận
             console.log(`Fetching public key for ${recipientEmail}...`);
-            const response = await fetch(`http://localhost:5000/api/users/key?email=${recipientEmail}`);
+
+            const token = localStorage.getItem('jwtToken'); // Lấy token từ local storage
+            const response = await fetch(`http://localhost:5000/api/users/key?email=${encodeURIComponent(recipientEmail)}`, {
+                // Bổ sung header xác thực
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
             const data = await response.json();
 
             if (!response.ok || !data.found || !data.publicKey) {

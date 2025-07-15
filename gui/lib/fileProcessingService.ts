@@ -57,7 +57,16 @@ export async function processEncryption(
     }
 
     const wrappedSessionKey = await window.crypto.subtle.wrapKey("raw", sessionKey, recipientPublicKey, { name: "RSA-OAEP" });
-    const toBase64 = (buffer: ArrayBuffer | Uint8Array) => btoa(String.fromCharCode(...new Uint8Array(buffer)));
+    const toBase64 = (buffer: ArrayBuffer | Uint8Array): string => {
+        const uint8 = new Uint8Array(buffer);
+        const CHUNK_SIZE = 8192; // Xử lý mỗi lần 8KB
+        let binary = '';
+        for (let i = 0; i < uint8.length; i += CHUNK_SIZE) {
+            // Áp dụng fromCharCode cho từng khối nhỏ, tránh lỗi call stack
+            binary += String.fromCharCode.apply(null, Array.from(uint8.subarray(i, i + CHUNK_SIZE)));
+        }
+        return btoa(binary);
+    };
 
     // --- FEATURE 16: TẠO FILE DỰA TRÊN LỰA CHỌN ---
     if (format === 'combined') {

@@ -44,6 +44,14 @@ export const commonFeaturesConfig: FeatureMenu[] = [
       { key: "search-public", label: "Tìm kiếm public key", path: "search-public-key" },
     ],
   },
+  {
+    name: "File Processing",
+    key: "files",
+    icon: <FileText className="w-5 h-5" />,
+    items: [
+      { key: "file-proc", label: "Encrypt & Decrypt", path: "file-processing" },
+    ],
+  },
 ];
 
 export const adminFeaturesConfig: FeatureMenu[] = [
@@ -70,4 +78,5 @@ export const featureComponents: FeatureComponentMap = {
   "account-management": AccountManagement,
   "search-public-key": SearchPublicKey,
    "qr-code-generator": QRCodeGenerator,
+   "file-processing": FileProcessing,
 };

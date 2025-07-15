@@ -191,3 +191,30 @@ exports.verifyPrivateKeyAccess = async (req, res) => {
         res.status(401).json({ message: "Verification failed. Incorrect password." });
     }
 };
+
+// Lấy thông tin khóa đã mã hóa của người dùng đang đăng nhập
+exports.getMyKey = async (req, res) => {
+    try {
+        // userId được lấy từ token sau khi qua middleware xác thực
+        const userId = req.user.userId; 
+
+        const rsaKey = await prisma.rSAKey.findUnique({
+            where: { userId },
+            select: {
+                encryptedPrivateKey: true,
+                passphraseSalt: true,
+                iv: true,
+            }
+        });
+
+        if (!rsaKey) {
+            return res.status(404).json({ message: "RSA key not found for this user." });
+        }
+
+        res.status(200).json(rsaKey);
+
+    } catch (error) {
+        console.error("Error fetching user's RSA key:", error);
+        res.status(500).json({ message: "Internal server error." });
+    }
+};
