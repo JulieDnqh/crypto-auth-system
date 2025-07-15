@@ -49,7 +49,7 @@ export const commonFeaturesConfig: FeatureMenu[] = [
     key: "files",
     icon: <FileText className="w-5 h-5" />,
     items: [
-      { key: "file-proc", label: "Encrypt & Decrypt", path: "file-processing" },
+      { key: "file-proc", label: "Verify Feature 12 (Chunking)", path: "file-processing" },
     ],
   },
 ];
