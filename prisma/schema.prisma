@@ -9,7 +9,6 @@ datasource db {
 
 type Contact {
   email     String
-  publicKey String
   addedAt   DateTime @default(now())
 }
 
@@ -29,6 +28,10 @@ model User {
   otp             String?
   otpCreatedAt    DateTime?
   otpExpiresAt    DateTime?
+
+  failedLoginAttempts Int       @default(0)
+  lastFailedLogin     DateTime?
+  accountLockedUntil  DateTime?
 
   role            String   @default("USER")
 

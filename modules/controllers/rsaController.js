@@ -3,6 +3,7 @@ const prisma = require('../config/db');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const { encryptPrivateKey, decryptPrivateKey } = require('../utils/cryptoHelpers');
+const log = require('../utils/logger');
 
 // Hàm helper để mã hóa private key
 // const encryptPrivateKey = (privateKey, passphrase) => {
@@ -88,9 +89,11 @@ exports.generateKeys = async (req, res) => {
             createdAt: newKey.createdAt,
             expiresAt: newKey.expiresAt,
         });
+        log(user.email, 'Generate RSA Keys', 'Success', 'RSA key pair generated and saved');
 
     } catch (error) {
         console.error("Error generating RSA keys:", error);
+        log(req.user.email, 'Generate RSA Keys', 'Failed', error.message);
         res.status(500).json({ message: 'Internal server error.' });
     }
 };
@@ -128,9 +131,11 @@ exports.getKeyStatus = async (req, res) => {
             expiryStatus: expiryStatus, // Trạng thái: active, expiring_soon, expired
             expiresInDays: expiresInDays > 0 ? expiresInDays : 0
         });
+        log(req.user.email, 'Get Key Status', 'Success', 'Key status retrieved');
 
     } catch (error) {
         console.error("Lỗi khi lấy trạng thái khóa:", error);
+        log(req.user.email, 'Get Key Status', 'Failed', error.message);
         res.status(500).json({ message: 'Internal server error.' });
     }
 };
@@ -145,9 +150,11 @@ exports.deleteKey = async (req, res) => {
         });
 
         res.status(200).json({ message: 'RSA key deleted successfully.' });
+        log(req.user.email, 'Delete Key', 'Success', 'RSA key deleted successfully');
 
     } catch (error) {
         console.error("Lỗi khi xóa khóa:", error);
+        log(req.user.email, 'Delete Key', 'Failed', error.message);
         res.status(500).json({ message: 'Internal server error.' });
     }
 };
@@ -184,10 +191,45 @@ exports.verifyPrivateKeyAccess = async (req, res) => {
             // Chỉ trả về một phần nhỏ của private key để xác nhận, không bao giờ trả về toàn bộ
             privateKeySnippet: decryptedKey.substring(0, 50) + "..."
         });
+        log(req.user.email, 'Verify Private Key Access', 'Success', 'Private key access verified');
 
     } catch (error) {
         // Lỗi từ decryptPrivateKey sẽ được bắt ở đây
         console.error("Verification failed:", error.message);
+        log(req.user.email, 'Verify Private Key Access', 'Failed', error.message);
         res.status(401).json({ message: "Verification failed. Incorrect password." });
+    }
+};
+
+exports.renewKey = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+
+        const userKey = await prisma.rSAKey.findUnique({
+            where: { userId: userId }
+        });
+
+        if (!userKey) {
+            return res.status(404).json({ message: "No RSA key found to renew." });
+        }
+
+        const now = new Date();
+        const newExpiresAt = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000); // Gia hạn thêm 90 ngày
+
+        const updatedKey = await prisma.rSAKey.update({
+            where: { userId: userId },
+            data: { expiresAt: newExpiresAt }
+        });
+
+        res.status(200).json({
+            message: "RSA key renewed successfully.",
+            expiresAt: updatedKey.expiresAt
+        });
+        log(req.user.email, 'Renew RSA Key', 'Success', 'RSA key renewed successfully');
+
+    } catch (error) {
+        console.error("Error renewing RSA key:", error);
+        log(req.user.email, 'Renew RSA Key', 'Failed', error.message);
+        res.status(500).json({ message: 'Internal server error.' });
     }
 };

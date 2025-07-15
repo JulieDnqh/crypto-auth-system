@@ -10,9 +10,10 @@ import { commonFeaturesConfig, adminFeaturesConfig, FeatureMenu } from "@/lib/da
 interface SidebarProps {
   isAdmin: boolean;
   onItemClick: (path: string) => void;
+  adminView?: boolean;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ isAdmin, onItemClick }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ isAdmin, onItemClick, adminView }) => {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   const searchParams = useSearchParams();
   const currentFeaturePath = searchParams.get('feature');
@@ -33,36 +34,51 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin, onItemClick }) => {
       <h2 className="text-2xl font-bold mb-6 text-center">Dashboard</h2>
       <nav className="flex-grow">
         <ul>
-          {menuItems.map((menu) => (
-            <li key={menu.key} className="mb-2">
-              <button
-                onClick={() => toggleMenu(menu.key)}
-                className="flex items-center justify-between w-full p-2 rounded-md hover:bg-[#0C5776] focus:outline-none"
-              >
-                <span className="flex items-center">
-                  {menu.icon}
-                  <span className="ml-3">{menu.name}</span>
-                </span>
-                {openMenus[menu.key] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-              </button>
-              {openMenus[menu.key] && (
-                <ul className="ml-6 mt-1 space-y-1">
-                  {menu.items.map((item) => (
-                    <li key={item.key}>
-                      <button
-                        onClick={() => onItemClick(item.path)}
-                        className={`block w-full text-left p-2 rounded-md ${
-                          currentFeaturePath === item.path ? 'bg-[#0C5776] font-bold' : 'hover:bg-[#0C5776]'
-                        }`}
-                      >
-                        {item.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
+          {adminView ? (
+            adminFeaturesConfig.flatMap(menu => menu.items).map(item => (
+              <li key={item.key} className="mb-2">
+                <button
+                  onClick={() => onItemClick(item.path)}
+                  className={`block w-full text-left p-2 rounded-md ${
+                    currentFeaturePath === item.path ? 'bg-[#0C5776] font-bold text-white' : 'hover:bg-[#0C5776] text-blue-100'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              </li>
+            ))
+          ) : (
+            menuItems.map((menu) => (
+              <li key={menu.key} className="mb-2">
+                <button
+                  onClick={() => toggleMenu(menu.key)}
+                  className="flex items-center justify-between w-full p-2 rounded-md hover:bg-[#0C5776] focus:outline-none"
+                >
+                  <span className="flex items-center">
+                    {menu.icon}
+                    <span className="ml-3">{menu.name}</span>
+                  </span>
+                  {openMenus[menu.key] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+                {openMenus[menu.key] && (
+                  <ul className="ml-6 mt-1 space-y-1">
+                    {menu.items.map((item) => (
+                      <li key={item.key}>
+                        <button
+                          onClick={() => onItemClick(item.path)}
+                          className={`block w-full text-left p-2 rounded-md ${
+                            currentFeaturePath === item.path ? 'bg-[#0C5776] font-bold' : 'hover:bg-[#0C5776]'
+                          }`}
+                        >
+                          {item.label}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))
+          )}
         </ul>
       </nav>
     </div>
