@@ -65,3 +65,63 @@
 [2025-07-15T02:18:52.931Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
 [2025-07-15T02:18:53.383Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
 [2025-07-15T02:19:04.513Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T02:21:07.761Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T02:21:09.435Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T02:53:09.699Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T02:53:15.440Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T02:53:19.962Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T02:53:21.924Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T02:53:23.750Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Too many failed login attempts. Account locked for 5 minutes.
+[2025-07-15T02:53:26.822Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T02:58:24.008Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Too many failed login attempts. Account locked for 5 minutes.
+[2025-07-15T02:58:25.832Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T02:59:01.039Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T03:02:47.314Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 1 minutes
+[2025-07-15T03:03:57.792Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Too many failed login attempts. Account locked for 5 minutes.
+[2025-07-15T03:03:59.311Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T03:11:08.359Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Too many failed login attempts. Account locked for 5 minutes.
+[2025-07-15T03:11:09.831Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T03:20:06.205Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Too many failed login attempts. Account locked for 5 minutes.
+[2025-07-15T03:20:33.066Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T03:20:35.008Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T03:20:37.322Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T03:24:59.169Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 1 minutes
+[2025-07-15T03:25:02.334Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 1 minutes
+[2025-07-15T03:25:03.673Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 1 minutes
+[2025-07-15T03:27:14.669Z] [huycan2004@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T03:27:39.674Z] [huycan2004@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T03:34:06.416Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T03:34:06.924Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T03:34:21.280Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T03:34:24.685Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T03:34:26.552Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T03:34:27.641Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T03:34:29.909Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Too many failed login attempts. Account locked for 5 minutes.
+[2025-07-15T03:34:32.079Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T03:34:33.999Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T03:34:47.371Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T03:35:19.782Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T03:38:02.683Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 2 minutes
+[2025-07-15T03:38:04.803Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 2 minutes
+[2025-07-15T03:38:06.571Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 2 minutes
+[2025-07-15T03:38:16.692Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 2 minutes
+[2025-07-15T03:42:33.439Z] [huycan2004@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T03:47:52.105Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T03:47:55.169Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T03:47:57.467Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T03:47:58.779Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T03:48:00.589Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Too many failed login attempts. Account locked for 5 minutes.
+[2025-07-15T03:48:02.114Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T03:48:53.463Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T03:49:14.228Z] [huycan1211@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T03:49:37.185Z] [huycan1211@gmail.com] [Verify OTP] [Failed] Incorrect OTP
+[2025-07-15T03:54:07.275Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Too many failed login attempts. Account locked for 5 minutes.
+[2025-07-15T03:57:01.365Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 3 minutes
+[2025-07-15T04:01:12.701Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Too many failed login attempts. Account locked for 5 minutes.
+[2025-07-15T04:01:16.344Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T04:01:18.262Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T04:01:20.727Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
+[2025-07-15T04:01:52.727Z] [huycan1211@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T04:02:13.504Z] [huycan1211@gmail.com] [Verify OTP] [Failed] Incorrect OTP
+[2025-07-15T04:02:23.771Z] [huycan1211@gmail.com] [Verify OTP] [Failed] Incorrect OTP
+[2025-07-15T04:02:36.130Z] [huycan1211@gmail.com] [Verify OTP] [Success] OTP verified successfully

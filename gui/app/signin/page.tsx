@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../components/button";
 import { Input } from "../components/input";
 import { Label } from "../components/label";
@@ -18,12 +18,59 @@ export default function SignInPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Thêm state isLoading
+  const [isAccountLocked, setIsAccountLocked] = useState(false);
+  const [lockoutEndTime, setLockoutEndTime] = useState<Date | null>(null);
+  const [remainingTime, setRemainingTime] = useState(0);
+
+  useEffect(() => {
+    const checkAndSetInitialLockout = () => {
+      if (!email) return; // Only run if email is set
+
+      const storedLockoutEndTime = localStorage.getItem(`lockoutEndTime_${email}`);
+      if (storedLockoutEndTime) {
+        const endTime = new Date(storedLockoutEndTime);
+        const now = new Date();
+        if (endTime > now) {
+          setLockoutEndTime(endTime);
+          setIsAccountLocked(true);
+          setRemainingTime(Math.ceil((endTime.getTime() - now.getTime()) / 1000));
+        } else {
+          localStorage.removeItem(`lockoutEndTime_${email}`);
+          setIsAccountLocked(false); // Ensure state is false if lockout expired
+        }
+      } else {
+        setIsAccountLocked(false); // Ensure state is false if no lockout in localStorage
+      }
+    };
+
+    checkAndSetInitialLockout();
+  }, [email]); // Run only when email changes
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isAccountLocked && lockoutEndTime) {
+      timer = setInterval(() => {
+        const now = new Date();
+        const diff = Math.max(0, Math.ceil((lockoutEndTime.getTime() - now.getTime()) / 1000));
+        setRemainingTime(diff);
+        if (diff === 0) {
+          setIsAccountLocked(false);
+          setLockoutEndTime(null);
+          setError(""); // Clear error message when lockout ends
+          localStorage.removeItem(`lockoutEndTime_${email}`); // Clear from localStorage
+        }
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [isAccountLocked, lockoutEndTime, email]);
 
   // Hàm xử lý giai đoạn 1: Xác thực mật khẩu
   const handleSignInStep1 = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true); // Bắt đầu loading
+    // Không reset isAccountLocked, lockoutEndTime, remainingTime ở đây
+    // để useEffect có thể khôi phục trạng thái từ localStorage nếu có
 
     try {
       const response = await fetch(
@@ -41,7 +88,17 @@ export default function SignInPage() {
         // Mở modal OTP thay vì chuyển trang
         setIsOtpModalOpen(true);
       } else {
-        setError(data.message || "Đã có lỗi xảy ra.");
+        const errorMessage = data.message || "Đã có lỗi xảy ra.";
+        setError(errorMessage);
+
+        if (response.status === 403 && data.accountLockedUntil) {
+          const endTime = new Date(data.accountLockedUntil);
+          setLockoutEndTime(endTime);
+          setIsAccountLocked(true);
+          setRemainingTime(Math.ceil((endTime.getTime() - new Date().getTime()) / 1000));
+          localStorage.setItem(`lockoutEndTime_${email}`, endTime.toISOString()); // Save to localStorage with email key
+          setError("Account locked, please wait."); // Set generic error message
+        }
       }
     } catch (err) {
       setError("Không thể kết nối đến máy chủ.");
@@ -66,6 +123,7 @@ export default function SignInPage() {
       if (response.ok) {
         const token = data.token; // Lấy token từ response
         localStorage.setItem("jwtToken", token); // Lưu token vào localStorage
+        localStorage.removeItem(`lockoutEndTime_${email}`); // Clear lockout from localStorage on successful login
 
         const userRole = data.user.role;
 
@@ -257,10 +315,10 @@ export default function SignInPage() {
                     disabled={isLoading}
                   >
                     {isLoading ? (
-                      // Nếu đang loading, hiển thị icon quay
                       <LoaderCircle className="h-5 w-5 animate-spin mx-auto" />
+                    ) : isAccountLocked ? (
+                      `Locked (${Math.floor(remainingTime / 60)}:${(remainingTime % 60).toString().padStart(2, '0')})`
                     ) : (
-                      // Nếu không, hiển thị chữ "Sign in"
                       "Sign in"
                     )}
                   </Button>

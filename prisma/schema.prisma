@@ -30,6 +30,10 @@ model User {
   otpCreatedAt    DateTime?
   otpExpiresAt    DateTime?
 
+  failedLoginAttempts Int       @default(0)
+  lastFailedLogin     DateTime?
+  accountLockedUntil  DateTime?
+
   role            String   @default("USER")
 
   createdAt       DateTime @default(now())
