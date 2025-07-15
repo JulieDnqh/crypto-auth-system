@@ -39,7 +39,7 @@ model User {
   rsaKey          RSAKey?  @relation("UserRSAKey")
 
   // Hash của mã khôi phục, có thể null, và phải là duy nhất
-  recoveryCodeHash String?  @unique
+  recoveryCodeHash String?
 
   contacts        Contact[]
 

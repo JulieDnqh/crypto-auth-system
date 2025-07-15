@@ -114,11 +114,49 @@ const signin = async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password." });
     }
 
+    // Kiểm tra nếu tài khoản bị khóa
+    if (user.accountLockedUntil && user.accountLockedUntil > new Date()) {
+      const timeLeft = Math.ceil((user.accountLockedUntil.getTime() - new Date().getTime()) / (1000 * 60));
+      log(email, 'Signin', 'Failed', `Account locked for ${timeLeft} minutes`);
+      return res.status(403).json({ message: `Account locked. Please try again in ${timeLeft} minutes.` });
+    }
+
     // 2. So khớp mật khẩu
     const isPasswordCorrect = await bcrypt.compare(password, user.passwordHash);
     if (!isPasswordCorrect) {
-      log(email, 'Signin', 'Failed', 'Invalid email or password');
-      return res.status(401).json({ message: "Invalid email or password." });
+      // Cập nhật số lần đăng nhập sai
+      const updatedAttempts = (user.failedLoginAttempts || 0) + 1;
+      const updateData = {
+        failedLoginAttempts: updatedAttempts,
+        lastFailedLogin: new Date(),
+      };
+
+      let message = "Invalid email or password.";
+      if (updatedAttempts >= 5) {
+        const lockedUntil = new Date(new Date().getTime() + 5 * 60 * 1000); // Khóa 5 phút
+        updateData.accountLockedUntil = lockedUntil;
+        message = `Too many failed login attempts. Account locked for 5 minutes.`;
+      }
+
+      await prisma.user.update({
+        where: { id: user.id },
+        data: updateData,
+      });
+
+      log(email, 'Signin', 'Failed', message);
+      return res.status(401).json({ message: message });
+    }
+
+    // Nếu đăng nhập thành công, reset số lần thử sai
+    if (user.failedLoginAttempts > 0 || user.accountLockedUntil) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          failedLoginAttempts: 0,
+          lastFailedLogin: null,
+          accountLockedUntil: null,
+        },
+      });
     }
 
     // 3. Tạo JSON Web Token (JWT)

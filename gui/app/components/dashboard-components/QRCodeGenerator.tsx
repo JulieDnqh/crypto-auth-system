@@ -9,9 +9,18 @@ import { Button } from "@/app/components/button";
 const formatDate = (isoString: string) => {
     try {
         const date = new Date(isoString);
-        return date.toLocaleString(); // Formats to a human-readable string based on locale
+        if (isNaN(date.getTime())) {
+            return "Invalid Date";
+        }
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = String(date.getFullYear()).slice(-2);
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
     } catch (e) {
-        return isoString; // Return original if invalid date
+        return "Invalid Date";
     }
 };
 
@@ -146,7 +155,7 @@ export default function QRCodeGenerator() {
                         </p>
                         <button
                             onClick={handleDownloadQrCode}
-                            className="mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
+                            className="mt-4 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
                         >
                             Download QR Code
                         </button>
@@ -176,14 +185,14 @@ export default function QRCodeGenerator() {
                         file:rounded-full file:border-0
                         file:text-sm file:font-semibold
                         file:bg-blue-50 file:text-blue-700
-                        hover:file:bg-blue-100"
+                        hover:file:bg-blue-100 active:file:bg-blue-200"
                     />
                 </div>
 
                 <Button
                     onClick={handleDecodeQrCode}
                     disabled={!selectedFile || decoding}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
+                    className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
                 >
                     {decoding ? 'Decoding...' : 'Decode QR Code'}
                 </Button>
