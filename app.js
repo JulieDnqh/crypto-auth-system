@@ -22,6 +22,9 @@ app.use('/api/users', userRoutes);
 const qrCodeRoutes = require('./modules/routes/qrCodeRoutes');
 app.use('/api/qrcode', qrCodeRoutes);
 
+const adminRoutes = require('./modules/routes/adminRoutes');
+app.use('/api/admin', adminRoutes);
+
 app.listen(port, () => {
   console.log(`Backend server is running on http://localhost:${port}`);
 });

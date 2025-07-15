@@ -7,6 +7,7 @@ import RSAPersonalKeyManagement from "@/app/components/dashboard-components/KeyM
 import AccountManagement from "@/app/components/dashboard-components/AccountManagement";
 import SearchPublicKey from "@/app/components/dashboard-components/SearchPublicKey";
 import QRCodeGenerator from "@/app/components/dashboard-components/QRCodeGenerator"; // Import the new component
+import AdminLogs from "@/app/components/dashboard-components/AdminLogs"; // Import AdminLogs
 
 // --- ĐỊNH NGHĨA CẤU TRÚC DỮ LIỆU ---
 export interface FeatureItem {
@@ -52,10 +53,8 @@ export const adminFeaturesConfig: FeatureMenu[] = [
       key: "admin",
       icon: <Shield className="w-5 h-5" />,
       items: [
-        { key: "admin-roles", label: "Phân quyền tài khoản", path: "manage-roles" },
-        { key: "admin-logs", label: "Ghi log bảo mật", path: "view-logs" },
-        // Thêm mục tìm kiếm
-        // { key: "admin-search", label: "Tìm kiếm public key", path: "search-public-key" },
+        { key: "admin-users", label: "Quản lý tài khoản", path: "admin-account-management" },
+        { key: "admin-logs", label: "Xem nhật ký hoạt động", path: "admin-view-logs" },
       ],
     },
 ];
@@ -73,4 +72,6 @@ export const featureComponents: FeatureComponentMap = {
   "account-management": AccountManagement,
   "search-public-key": SearchPublicKey,
   "qr-code-generator": QRCodeGenerator,
+  "admin-account-management": AccountManagement, // Re-use for admin account management
+  "admin-view-logs": AdminLogs,
 };

@@ -7,6 +7,7 @@ import useAuth from "@/lib/hooks/useAuth";
 import LogoutButton from "@/app/components/LogoutButton";
 import { Sidebar } from "@/app/components/dashboard-components/Sidebar";
 import { featureComponents } from "@/lib/dashboardFeatures";
+import DashboardSwitcherButton from "@/app/components/DashboardSwitcherButton";
 
 // Định nghĩa kiểu cho dữ liệu người dùng
 interface UserData {
@@ -131,7 +132,12 @@ export default function DashboardPage() {
       <div className="flex-1 flex flex-col">
         <header className="bg-white shadow p-4 flex justify-between items-center">
           <h1 className="text-xl font-semibold text-[#001C44]">User Dashboard</h1>
-          <LogoutButton />
+          <div className="flex items-center">
+            {userData?.role === 'ADMIN' && (
+              <DashboardSwitcherButton currentRole={userData.role} targetDashboard="admin" />
+            )}
+            <LogoutButton />
+          </div>
         </header>
         <main className="flex-1 p-6 overflow-y-auto">
           {renderFeatureComponent()}
