@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+type Contact {
+  email     String
+  publicKey String
+  addedAt   DateTime @default(now())
+}
+
 model User {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -32,6 +38,11 @@ model User {
   // ✅ One-to-one: user chỉ có 1 rsaKey
   rsaKey          RSAKey?  @relation("UserRSAKey")
 
+  // Hash của mã khôi phục, có thể null, và phải là duy nhất
+  recoveryCodeHash String?  @unique
+
+  contacts        Contact[]
+
   @@map("users")
 }
 
@@ -50,4 +61,16 @@ model RSAKey {
   user                User     @relation("UserRSAKey", fields: [userId], references: [id])
 
   @@map("rsa_keys")
+}
+
+model LogActivity {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  timestamp   DateTime @default(now())
+  userId      String?  @db.ObjectId // Optional, if log is not tied to a specific user
+  email       String? // Optional, for easier lookup
+  action      String
+  status      String // e.g., "SUCCESS", "FAILED"
+  details     String? // Optional, more detailed message
+
+  @@map("log_activities")
 }

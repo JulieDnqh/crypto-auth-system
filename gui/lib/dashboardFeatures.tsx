@@ -7,6 +7,7 @@ import FileProcessing from "@/app/components/dashboard-components/FileProcessing
 import RSAPersonalKeyManagement from "@/app/components/dashboard-components/KeyManagement";
 import AccountManagement from "@/app/components/dashboard-components/AccountManagement";
 import SearchPublicKey from "@/app/components/dashboard-components/SearchPublicKey";
+import QRCodeGenerator from "@/app/components/dashboard-components/QRCodeGenerator";
 
 // Định nghĩa cấu trúc dữ liệu
 export interface FeatureItem {
@@ -25,29 +26,22 @@ export interface FeatureMenu {
 // Định nghĩa các menu
 export const commonFeaturesConfig: FeatureMenu[] = [
   {
-    name: "Quản lý tài khoản",
+    name: "Account Management",
     key: "account",
     icon: <User className="w-5 h-5" />,
     items: [
-      { key: "acc-update", label: "Cập nhật thông tin", path: "account-management" },
-      { key: "acc-recover", label: "Khôi phục tài khoản", path: "account-recovery" },
+      { key: "acc-update", label: "Update Account Information", path: "account-management" },
+      { key: "acc-recover", label: "Account Recovery", path: "account-recovery" },
     ],
   },
   {
-    name: "Quản lý khoá",
+    name: "Key Management",
     key: "keys",
     icon: <Key className="w-5 h-5" />,
     items: [
-      { key: "rsa-personal", label: "Quản lý khoá RSA cá nhân", path: "rsa-personal-key" },
-      { key: "qr-public", label: "QR Code Public Key", path: "qr-public-key" },
-    ],
-  },
-  {
-    name: "Xử lý File",
-    key: "files",
-    icon: <FileText className="w-5 h-5" />,
-    items: [
-      { key: "file-proc", label: "Mã hoá & Kiểm chứng", path: "file-processing" },
+      { key: "rsa-personal", label: "Personal RSA Key", path: "rsa-personal-key" },
+      { key: "qr-public", label: "QR Code Public Key", path: "qr-code-generator" },
+      { key: "search-public", label: "Tìm kiếm public key", path: "search-public-key" },
     ],
   },
 ];
@@ -60,7 +54,8 @@ export const adminFeaturesConfig: FeatureMenu[] = [
       items: [
         { key: "admin-roles", label: "Phân quyền tài khoản", path: "manage-roles" },
         { key: "admin-logs", label: "Ghi log bảo mật", path: "view-logs" },
-        { key: "admin-search", label: "Tìm kiếm public key", path: "search-public-key" },
+        // Thêm mục tìm kiếm
+        // { key: "admin-search", label: "Tìm kiếm public key", path: "search-public-key" },
       ],
     },
 ];
@@ -74,5 +69,5 @@ export const featureComponents: FeatureComponentMap = {
   "rsa-personal-key": RSAPersonalKeyManagement,
   "account-management": AccountManagement,
   "search-public-key": SearchPublicKey,
-  "file-processing": FileProcessing,
+   "qr-code-generator": QRCodeGenerator,
 };

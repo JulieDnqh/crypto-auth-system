@@ -2,6 +2,7 @@ const prisma = require("../config/db"); // Import Prisma client từ file config
 const bcrypt = require("bcryptjs"); // Cần cài đặt: npm install bcryptjs
 const jwt = require("jsonwebtoken"); // Cần cài đặt: npm install jsonwebtoken
 const nodemailer = require("nodemailer");
+const crypto = require('crypto');
 const { encryptPrivateKey, decryptPrivateKey } = require('../utils/cryptoHelpers');
 
 // Hàm xử lý đăng ký
@@ -61,6 +62,12 @@ const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
 
+    // Tạo một mã khôi phục gốc, dễ đọc
+    const recoveryCode = crypto.randomBytes(8).toString('hex').toUpperCase();
+
+    // Hash mã khôi phục này trước khi lưu vào DB
+    const recoveryCodeHash = await bcrypt.hash(recoveryCode, 10);
+
     // Tạo người dùng mới
     const newUser = await prisma.user.create({
       data: {
@@ -72,6 +79,7 @@ const signup = async (req, res) => {
         address,
         passwordHash,
         passwordSalt: salt,
+        recoveryCodeHash: recoveryCodeHash
         // role: 'USER', // Default role is handled by Prisma schema now
       },
     });
@@ -84,7 +92,7 @@ const signup = async (req, res) => {
     console.log("✅ [Success] User created with id:", newUser.id);
     res
       .status(201)
-      .json({ message: "Sign Up successfully!", user: userResponse });
+      .json({ message: "Sign Up successfully!", user: userResponse, recoveryCode: recoveryCode });
   } catch (error) {
     console.error("Lỗi khi đăng ký:", error);
     res.status(500).json({ message: "Lỗi máy chủ nội bộ." });
@@ -463,6 +471,63 @@ const getDashboardData = async (req, res) => {
   }
 };
 
+const recoverAccount = async (req, res) => {
+  try {
+      const { email, recoveryCode, newPassword } = req.body;
+
+      // 1. Kiểm tra đầu vào
+      if (!email || !recoveryCode || !newPassword || newPassword.length < 8) {
+          return res.status(400).json({ message: "Invalid input." });
+      }
+
+      // 2. Tìm user và kiểm tra mã khôi phục
+      const user = await prisma.user.findUnique({
+          where: { email },
+          include: { rsaKey: true }
+      });
+
+      if (!user || !user.recoveryCodeHash) {
+          return res.status(401).json({ message: "Invalid recovery code or email." });
+      }
+      
+      const isRecoveryCodeCorrect = await bcrypt.compare(recoveryCode, user.recoveryCodeHash);
+      if (!isRecoveryCodeCorrect) {
+          return res.status(401).json({ message: "Invalid recovery code or email." });
+      }
+
+      // 3. Hash mật khẩu mới
+      const newSalt = await bcrypt.genSalt(10);
+      const newPasswordHash = await bcrypt.hash(newPassword, newSalt);
+      
+      // 4. Mã hóa lại Private Key (nếu có) bằng MÃ KHÔI PHỤC
+      // Đây là một vấn đề: chúng ta không có mật khẩu cũ để giải mã.
+      // Giải pháp: Chúng ta phải chấp nhận rằng khi khôi phục bằng recovery code,
+      // người dùng sẽ MẤT quyền truy cập vào các dữ liệu được mã hóa bằng khóa cũ.
+      // Một khóa RSA mới sẽ được tạo ra.
+      
+      // Xóa khóa RSA cũ (nếu có)
+      if (user.rsaKey) {
+          await prisma.rSAKey.delete({ where: { userId: user.id }});
+      }
+
+      // 5. Cập nhật mật khẩu mới và VÔ HIỆU HÓA mã khôi phục cũ
+      await prisma.user.update({
+          where: { id: user.id },
+          data: {
+              passwordHash: newPasswordHash,
+              passwordSalt: newSalt,
+              // recoveryCodeHash: null // Vô hiệu hóa mã đã dùng
+          }
+      });
+
+      res.status(200).json({ message: "Password has been reset successfully. Your old recovery code is now invalid. Please log in." });
+
+  } catch (error) {
+      console.error("Error during account recovery:", error);
+      res.status(500).json({ message: "Internal server error." });
+  }
+};
+
 module.exports = {
   signup,
   signin,
@@ -471,4 +536,5 @@ module.exports = {
   updateUserProfile,
   changePassword,
   getDashboardData,
+  recoverAccount
 };

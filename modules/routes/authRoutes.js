@@ -8,6 +8,7 @@ const {
   updateUserProfile,
   changePassword,
   getDashboardData,
+  recoverAccount,
 } = require("../controllers/authController");
 const { getAuth } = require("../middleware/authMiddleware"); // Import middleware
 
@@ -27,5 +28,7 @@ router.get('/dashboard', getAuth, getDashboardData);
 // Route để cập nhật thông tin người dùng
 router.put('/profile', getAuth, updateUserProfile);
 router.put('/password', getAuth, changePassword);
+
+router.post('/recover', recoverAccount);
 
 module.exports = router;
