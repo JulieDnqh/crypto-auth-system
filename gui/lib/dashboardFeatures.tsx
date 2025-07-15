@@ -2,18 +2,19 @@
 
 import { User, Key, FileText, Shield } from "lucide-react";
 
-// Import các component tính năng của bạn
+// Import your feature components
+import KeyManagement from "@/app/components/dashboard-components/KeyManagement";
 
 import AccountManagement from "@/app/components/dashboard-components/AccountManagement";
 import SearchPublicKey from "@/app/components/dashboard-components/SearchPublicKey";
 import QRCodeGenerator from "@/app/components/dashboard-components/QRCodeGenerator"; // Import the new component
 import AdminLogs from "@/app/components/dashboard-components/AdminLogs"; // Import AdminLogs
 
-// --- ĐỊNH NGHĨA CẤU TRÚC DỮ LIỆU ---
+// --- DATA STRUCTURE DEFINITIONS ---
 export interface FeatureItem {
   key: string;
   label: string;
-  path: string; // Đường dẫn dùng trong URL
+  path: string; // Path used in URL
 }
 
 export interface FeatureMenu {
@@ -23,7 +24,7 @@ export interface FeatureMenu {
   items: FeatureItem[];
 }
 
-// --- ĐỊNH NGHĨA CÁC MENU ---
+// --- MENU DEFINITIONS ---
 export const commonFeaturesConfig: FeatureMenu[] = [
   {
     name: "Account Management",
@@ -41,20 +42,20 @@ export const commonFeaturesConfig: FeatureMenu[] = [
     items: [
       { key: "rsa-personal", label: "Personal RSA Key", path: "rsa-personal-key" },
       { key: "qr-public", label: "QR Code Public Key", path: "qr-code-generator" },
-      { key: "search-public", label: "Tìm kiếm public key", path: "search-public-key" },
+      { key: "search-public", label: "Search Public Key", path: "search-public-key" },
     ],
   },
-  // ... các menu khác
+  // ... other menus
 ];
 
 export const adminFeaturesConfig: FeatureMenu[] = [
     {
-      name: "Quản trị hệ thống",
+      name: "System Administration",
       key: "admin",
       icon: <Shield className="w-5 h-5" />,
       items: [
-        { key: "admin-users", label: "Quản lý tài khoản", path: "admin-account-management" },
-        { key: "admin-logs", label: "Xem nhật ký hoạt động", path: "admin-view-logs" },
+        { key: "admin-users", label: "User Management", path: "admin-account-management" },
+        { key: "admin-logs", label: "View Activity Logs", path: "admin-view-logs" },
       ],
     },
 ];
@@ -68,6 +69,7 @@ type FeatureComponentMap = {
 
 // Object map
 export const featureComponents: FeatureComponentMap = {
+  "rsa-personal-key": KeyManagement,
   "account-management": AccountManagement,
   "search-public-key": SearchPublicKey,
   "qr-code-generator": QRCodeGenerator,

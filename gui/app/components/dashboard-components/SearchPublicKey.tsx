@@ -40,8 +40,8 @@ export default function SearchPublicKey() {
         setSearchResult({ 
             found: false, 
             message: "Failed to connect to the server.",
-            // Thêm các trường còn lại với giá trị null hoặc undefined
-            email: searchEmail, // Có thể giữ lại email đã tìm kiếm
+            // Add remaining fields with null or undefined values
+            // Can keep the searched email
             firstName: "",
             publicKey: "",
             createdAt: "",
@@ -90,14 +90,14 @@ export default function SearchPublicKey() {
       {searchResult && (
         <div className="bg-white p-6 rounded-lg shadow-md animate-fade-in">
             {searchResult.found ? (
-            // --- KHI TÌM THẤY USER (dùng Fragment <> để nhóm các phần tử) ---
+            // --- WHEN USER IS FOUND (using Fragment <> to group elements) ---
             <>
                 <h4 className="text-lg font-bold text-[#001C44] mb-4">
                 Search Result for: {searchResult.email}
                 </h4>
                 
                 {searchResult.publicKey ? (
-                // --- Nếu user CÓ public key ---
+                // --- If user HAS a public key ---
                 <div className="grid md:grid-cols-3 gap-6">
                     <div className="md:col-span-2 space-y-3">
                     <div>
@@ -124,14 +124,14 @@ export default function SearchPublicKey() {
                     </div>
                 </div>
                 ) : (
-                // --- Nếu user KHÔNG CÓ public key ---
+                // --- If user DOES NOT HAVE a public key ---
                 <div className="text-center text-gray-500 p-4 border-t mt-4">
                     This user exists but does not have a registered public key.
                 </div>
                 )}
             </>
             ) : (
-            // --- KHI KHÔNG TÌM THẤY USER ---
+            // --- WHEN USER IS NOT FOUND ---
             <p className="text-center text-red-600 font-semibold py-4">
                 {searchResult.message}
             </p>
