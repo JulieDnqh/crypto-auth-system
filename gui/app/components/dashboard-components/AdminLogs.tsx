@@ -94,7 +94,7 @@ export default function AdminLogs() {
                 </Button>
             </div>
             <div className="overflow-x-auto">
-                <table className="min-w-full bg-white">
+                <table className="min-w-full bg-white table-fixed w-full">
                     <thead>
                         <tr>
                             <th className="py-2 px-4 border-b text-left text-gray-700">Timestamp</th>
@@ -111,7 +111,7 @@ export default function AdminLogs() {
                                 <td className="py-2 px-4 border-b text-gray-800">{logEntry.email || 'N/A'}</td>
                                 <td className="py-2 px-4 border-b text-gray-800">{logEntry.action}</td>
                                 <td className="py-2 px-4 border-b text-gray-800">{logEntry.status}</td>
-                                <td className="py-2 px-4 border-b text-gray-800">{logEntry.details || 'N/A'}</td>
+                                <td className="py-2 px-4 border-b text-gray-800 max-w-xs overflow-y-auto max-h-20">{logEntry.details || 'N/A'}</td>
                             </tr>
                         ))}
                     </tbody>

@@ -1,159 +1,471 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { Button } from "@/app/components/button";
-import { Input } from "@/app/components/input";
-import { ErrorModal } from "@/app/components/ErrorModal";
-import { Label } from "@/app/components/label";
+import { Button } from "../button";
+import { Input } from "../input";
+import { Label } from "../label";
+import { useState, useEffect } from "react";
+import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 
-interface User {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    role: string;
-    failedLoginAttempts: number;
-    accountLockedUntil: string | null;
-    createdAt: string;
+interface UserData {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  birthDate?: string; // Có thể có hoặc không
+  phone?: string;
+  address?: string;
+  role: "user" | "admin";
 }
 
-export default function AccountManagement() {
-    const [users, setUsers] = useState<User[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const [lockDuration, setLockDuration] = useState<number>(5); // Default lock for 5 minutes
+type EditableProfileFields = Omit<UserData, "id" | "email" | "role">;
 
-    const fetchUsers = async () => {
-        setLoading(true);
-        setError(null);
-        const token = localStorage.getItem('jwtToken');
-        if (!token) {
-            setError("Authentication token not found. Please sign in again.");
-            setLoading(false);
-            return;
-        }
+// Định nghĩa props cho component
+interface AccountManagementProps {
+  currentUser: UserData;
+  onProfileUpdate: () => void;
+}
 
-        try {
-            const response = await fetch('http://localhost:5000/api/admin/users', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+export default function AccountManagement({
+  currentUser,
+  onProfileUpdate,
+}: AccountManagementProps) {
+  const [editableProfile, setEditableProfile] = useState<
+    Partial<EditableProfileFields>
+  >({});
+  const [passwords, setPasswords] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
+  });
+  const [loadingProfile, setLoadingProfile] = useState(false);
+  const [loadingPassword, setLoadingPassword] = useState(false);
+  const [profileMessage, setProfileMessage] = useState({ type: "", text: "" });
+  const [passwordMessage, setPasswordMessage] = useState({
+    type: "",
+    text: "",
+  });
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || "Failed to fetch users.");
-            }
+  // Fetch dữ liệu profile ban đầu
+  // Điền dữ liệu vào form khi component được tải hoặc khi currentUser thay đổi
+  useEffect(() => {
+    if (currentUser) {
+      const formattedBirthDate = currentUser.birthDate
+        ? new Date(currentUser.birthDate).toISOString().split("T")[0]
+        : "";
 
-            const data = await response.json();
-            setUsers(data);
-        } catch (err: any) {
-            setError(err.message || "An unexpected error occurred while fetching users.");
-        } finally {
-            setLoading(false);
-        }
-    };
+      setEditableProfile({
+        firstName: currentUser.firstName || "",
+        lastName: currentUser.lastName || "",
+        birthDate: formattedBirthDate,
+        phone: currentUser.phone || "",
+        address: currentUser.address || "",
+      });
+    }
+  }, [currentUser]); // Dependency là currentUser, khi nó thay đổi, form sẽ cập nhật
 
-    useEffect(() => {
-        fetchUsers();
-    }, []);
+  const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEditableProfile((prev) => ({ ...prev, [name]: value }));
+  };
 
-    const handleLockUnlock = async (userId: string, action: 'lock' | 'unlock') => {
-        const token = localStorage.getItem('jwtToken');
-        if (!token) {
-            setError("Authentication token not found. Please sign in again.");
-            return;
-        }
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    /* ... */
+  };
 
-        try {
-            const url = `http://localhost:5000/api/admin/users/${userId}/${action}`;
-            const options: RequestInit = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-            };
+  const handleUpdateProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoadingProfile(true);
+    setProfileMessage({ type: "", text: "" });
 
-            if (action === 'lock') {
-                options.body = JSON.stringify({ lockDurationMinutes: lockDuration });
-            }
+    // So sánh để chỉ gửi những trường đã thay đổi
+    const changes: Partial<EditableProfileFields> = {};
+    (
+      Object.keys(editableProfile) as Array<keyof EditableProfileFields>
+    ).forEach((key) => {
+      // Luôn so sánh với `currentUser` là dữ liệu gốc mới nhất
+      let originalValue: string | undefined;
+      if (key === "birthDate") {
+        originalValue = currentUser.birthDate
+          ? new Date(currentUser.birthDate).toISOString().split("T")[0]
+          : "";
+      } else {
+        originalValue = currentUser[key as keyof UserData];
+      }
 
-            const response = await fetch(url, options);
+      if (editableProfile[key] !== (originalValue || "")) {
+        changes[key] = editableProfile[key];
+      }
+    });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || `Failed to ${action} user.`);
-            }
+    if (Object.keys(changes).length === 0) {
+      setProfileMessage({ type: "info", text: "No changes to update." });
+      setLoadingProfile(false);
+      return;
+    }
 
-            alert(`User ${action}ed successfully!`);
-            fetchUsers(); // Refresh the user list
-        } catch (err: any) {
-            setError(err.message || `An unexpected error occurred while ${action}ing user.`);
-        }
-    };
+    try {
+      const token = localStorage.getItem("jwtToken");
+      const response = await fetch("http://localhost:5000/api/auth/profile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(changes),
+      });
 
-    if (loading) return <p>Loading users...</p>;
-    if (error) return <ErrorModal isOpen={!!error} onClose={() => setError(null)} errorMessage={error} />;
+      const data = await response.json();
+      if (response.ok) {
+        setProfileMessage({ type: "success", text: data.message });
+        setEditableProfile((prev) => ({ ...prev, ...changes }));
+        // onProfileUpdate(); // Báo cho component cha để fetch lại dữ liệu mới nhất
+      } else {
+        setProfileMessage({ type: "error", text: data.message });
+      }
+    } catch (err) {
+      setProfileMessage({
+        type: "error",
+        text: "Failed to connect to server.",
+      });
+    } finally {
+      setLoadingProfile(false);
+    }
+  };
 
-    return (
-        <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold text-[#001C44] mb-4">Account Management</h2>
-            <div className="mb-4 flex items-center space-x-2">
-                <Label htmlFor="lockDuration" className="text-gray-700">Lock Duration (minutes):</Label>
-                <Input
-                    id="lockDuration"
-                    type="number"
-                    value={lockDuration}
-                    onChange={(e) => setLockDuration(parseInt(e.target.value) || 0)}
-                    min="1"
-                    className="w-24"
-                />
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPasswordMessage({ type: "", text: "" });
+
+    if (passwords.newPassword.length < 8) {
+      setPasswordMessage({
+        type: "error",
+        text: "New password must be at least 8 characters long.",
+      });
+      return;
+    }
+    if (passwords.newPassword !== passwords.confirmNewPassword) {
+      setPasswordMessage({
+        type: "error",
+        text: "New password and confirmation do not match.",
+      });
+      return;
+    }
+
+    setLoadingPassword(true);
+
+    try {
+      const token = localStorage.getItem("jwtToken"); // Dùng tên token đã thống nhất
+      const response = await fetch("http://localhost:5000/api/auth/password", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          oldPassword: passwords.oldPassword,
+          newPassword: passwords.newPassword,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setPasswordMessage({ type: "success", text: data.message });
+        // Xóa các ô password sau khi thành công
+        setPasswords({
+          oldPassword: "",
+          newPassword: "",
+          confirmNewPassword: "",
+        });
+      } else {
+        setPasswordMessage({ type: "error", text: data.message });
+      }
+    } catch (err) {
+      setPasswordMessage({
+        type: "error",
+        text: "Failed to connect to the server.",
+      });
+    } finally {
+      setLoadingPassword(false); // Luôn tắt loading khi kết thúc
+    }
+  };
+
+  // Nếu chưa có dữ liệu để điền vào form, hiển thị loading
+  // if (!originalProfile) {
+  //   return <div>Loading profile data...</div>;
+  // }
+
+  return (
+    <div className="space-y-8">
+      {/* Form 1: Cập nhật thông tin cá nhân */}
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-xl font-bold text-[#001C44] mb-4">
+          Update Profile Information
+        </h3>
+        <form
+          onSubmit={handleUpdateProfile}
+          className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
+          {/* Các ô input cho firstName, lastName, birthDate, ... */}
+          {/* Các ô input sẽ dùng editableProfile */}
+          <div>
+            <Label
+              htmlFor="firstName"
+              className="text-sm font-medium text-[#001C44]"
+            >
+              First Name
+            </Label>
+            <Input
+              id="firstName"
+              name="firstName"
+              value={editableProfile.firstName || ""}
+              onChange={handleProfileChange}
+              className="mt-1 w-full bg-[#F3F4F6] placeholder-[#9095A1] text-[#001C44] rounded-md border-gray-300"
+            />
+          </div>
+          <div>
+            <Label
+              htmlFor="lastName"
+              className="text-sm font-medium text-[#001C44]"
+            >
+              Last Name
+            </Label>
+            <Input
+              id="lastName"
+              name="lastName"
+              value={editableProfile.lastName || ""}
+              onChange={handleProfileChange}
+              className="mt-1 w-full bg-[#F3F4F6] placeholder-[#9095A1] text-[#001C44] rounded-md border-gray-300"
+            />
+          </div>
+          <div>
+            <Label
+              htmlFor="birthDate"
+              className="text-sm font-medium text-[#001C44]"
+            >
+              Date of Birth
+            </Label>
+            <Input
+              id="birthDate"
+              name="birthDate"
+              type="date"
+              value={editableProfile.birthDate || ""}
+              onChange={handleProfileChange}
+              className="mt-1 w-full bg-[#F3F4F6] placeholder-[#9095A1] text-[#001C44] rounded-md border-gray-300"
+            />
+          </div>
+          <div>
+            <Label
+              htmlFor="phone"
+              className="text-sm font-medium text-[#001C44]"
+            >
+              Phone Number
+            </Label>
+            <Input
+              id="phone"
+              name="phone"
+              value={editableProfile.phone || ""}
+              onChange={handleProfileChange}
+              className="mt-1 w-full bg-[#F3F4F6] placeholder-[#9095A1] text-[#001C44] rounded-md border-gray-300"
+            />
+          </div>
+          <div className="md:col-span-2">
+            <Label
+              htmlFor="address"
+              className="text-sm font-medium text-[#001C44]"
+            >
+              Address
+            </Label>
+            <Input
+              id="address"
+              name="address"
+              value={editableProfile.address || ""}
+              onChange={handleProfileChange}
+              className="mt-1 w-full bg-[#F3F4F6] placeholder-[#9095A1] text-[#001C44] rounded-md border-gray-300"
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <Button
+              type="submit"
+              disabled={loadingProfile}
+              className="w-full bg-[#2D99AE] hover:bg-[#0C5776] text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center"
+            >
+              {loadingProfile ? (
+                <LoaderCircle className="h-5 w-5 animate-spin" />
+              ) : (
+                "Update Profile"
+              )}
+            </Button>
+            {profileMessage.text && (
+              <p
+                className={
+                  profileMessage.type === "success"
+                    ? "text-green-500"
+                    : "text-red-500"
+                }
+              >
+                {profileMessage.text}
+              </p>
+            )}
+          </div>
+        </form>
+      </div>
+
+      {/* Form 2: Thay đổi mật khẩu/passphrase */}
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-xl font-bold text-[#001C44] mb-4">
+          Change Password
+        </h3>
+        <p className="text-sm text-gray-500 mb-4">
+          Changing your password will re-encrypt your RSA private key for
+          security.
+        </p>
+        <form onSubmit={handleChangePassword} className="space-y-4">
+          {/* Ô Old Password */}
+          <div>
+            <Label
+              htmlFor="oldPassword"
+              className="text-sm font-medium text-[#001C44]"
+            >
+              Old Password
+            </Label>
+            <div className="relative mt-1">
+              <Input
+                id="oldPassword"
+                name="oldPassword"
+                type={showOldPassword ? "text" : "password"}
+                className="mt-1 w-full bg-[#F3F4F6] placeholder-[#9095A1] text-[#001C44]"
+                placeholder="Enter your current password"
+                value={passwords.oldPassword}
+                // Cập nhật đúng trường 'oldPassword' trong state
+                onChange={(e) =>
+                  setPasswords((prev) => ({
+                    ...prev,
+                    oldPassword: e.target.value,
+                  }))
+                }
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowOldPassword(!showOldPassword)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
+              >
+                {showOldPassword ? (
+                  <Eye className="h-5 w-5 text-gray-400" />
+                ) : (
+                  <EyeOff className="h-5 w-5 text-gray-400" />
+                )}
+              </button>
             </div>
-            <div className="overflow-x-auto">
-                <table className="min-w-full bg-white">
-                    <thead>
-                        <tr>
-                            <th className="py-2 px-4 border-b text-left text-gray-700">Email</th>
-                            <th className="py-2 px-4 border-b text-left text-gray-700">Name</th>
-                            <th className="py-2 px-4 border-b text-left text-gray-700">Role</th>
-                            <th className="py-2 px-4 border-b text-left text-gray-700">Failed Attempts</th>
-                            <th className="py-2 px-4 border-b text-left text-gray-700">Locked Until</th>
-                            <th className="py-2 px-4 border-b text-left text-gray-700">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map((user) => (
-                            <tr key={user.id}>
-                                <td className="py-2 px-4 border-b text-gray-800">{user.email}</td>
-                                <td className="py-2 px-4 border-b text-gray-800">{user.firstName} {user.lastName}</td>
-                                <td className="py-2 px-4 border-b text-gray-800">{user.role}</td>
-                                <td className="py-2 px-4 border-b text-gray-800">{user.failedLoginAttempts}</td>
-                                <td className="py-2 px-4 border-b text-gray-800">
-                                    {user.accountLockedUntil ? new Date(user.accountLockedUntil).toLocaleString() : 'N/A'}
-                                </td>
-                                <td className="py-2 px-4 border-b">
-                                    {user.accountLockedUntil && new Date(user.accountLockedUntil) > new Date() ? (
-                                        <Button
-                                            onClick={() => handleLockUnlock(user.id, 'unlock')}
-                                            className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded"
-                                        >
-                                            Unlock
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            onClick={() => handleLockUnlock(user.id, 'lock')}
-                                            className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded"
-                                        >
-                                            Lock
-                                        </Button>
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+          </div>
+
+          {/* Ô New Password */}
+          <div>
+            <Label
+              htmlFor="newPassword"
+              className="text-sm font-medium text-[#001C44]"
+            >
+              New Password
+            </Label>
+            <div className="relative mt-1">
+              <Input
+                id="newPassword"
+                name="newPassword"
+                type={showNewPassword ? "text" : "password"}
+                className="mt-1 w-full bg-[#F3F4F6] placeholder-[#9095A1] text-[#001C44]"
+                placeholder="Enter your new password (at least 8 characters)"
+                value={passwords.newPassword}
+                // Cập nhật đúng trường 'newPassword' trong state
+                onChange={(e) =>
+                  setPasswords((prev) => ({
+                    ...prev,
+                    newPassword: e.target.value,
+                  }))
+                }
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowNewPassword(!showNewPassword)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
+              >
+                {showNewPassword ? (
+                  <Eye className="h-5 w-5 text-gray-400" />
+                ) : (
+                  <EyeOff className="h-5 w-5 text-gray-400" />
+                )}
+              </button>
             </div>
-        </div>
-    );
+          </div>
+
+          <div>
+            <Label
+              htmlFor="confirmNewPassword"
+              className="text-sm font-medium text-[#001C44]"
+            >
+              Confirm New Password
+            </Label>
+            <div className="relative mt-1">
+              <Input
+                id="confirmNewPassword"
+                name="confirmNewPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                className="mt-1 w-full bg-[#F3F4F6] placeholder-[#9095A1] text-[#001C44]"
+                placeholder="Re-enter your new password"
+                value={passwords.confirmNewPassword}
+                onChange={(e) =>
+                  setPasswords((prev) => ({
+                    ...prev,
+                    confirmNewPassword: e.target.value,
+                  }))
+                }
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
+              >
+                {showConfirmPassword ? (
+                  <Eye className="h-5 w-5 text-gray-400" />
+                ) : (
+                  <EyeOff className="h-5 w-5 text-gray-400" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Nút Change Password */}
+          <Button
+            type="submit"
+            disabled={loadingPassword}
+            className="w-full bg-[#2D99AE] hover:bg-[#0C5776] text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center"
+          >
+            {loadingPassword ? (
+              <LoaderCircle className="h-5 w-5 animate-spin" />
+            ) : (
+              "Change Password"
+            )}
+          </Button>
+
+          {/* Thông báo thành công hoặc lỗi */}
+          {passwordMessage.text && (
+            <p
+              className={`text-sm text-center ${
+                passwordMessage.type === "success"
+                  ? "text-green-600"
+                  : "text-red-600"
+              }`}
+            >
+              {passwordMessage.text}
+            </p>
+          )}
+        </form>
+      </div>
+    </div>
+  );
 }
