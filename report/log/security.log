@@ -1,0 +1,362 @@
+[2025-07-15T04:41:17.847Z] [2ten1211@gmail.com] [Signup] [Success] User created successfully
+[2025-07-15T04:42:18.639Z] [2ten1211@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T04:42:33.459Z] [2ten1211@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T04:42:49.630Z] [2ten1211@gmail.com] [Generate RSA Keys] [Success] RSA key pair generated and saved
+[2025-07-15T04:42:51.715Z] [2ten1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T04:42:53.480Z] [2ten1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T04:42:53.791Z] [2ten1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T05:42:43.047Z] [huycan2004@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T05:42:57.385Z] [huycan2004@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T05:43:04.049Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T05:43:05.000Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T05:43:14.521Z] [huycan2004@gmail.com] [Add Contact from QR] [Success] Added new contact: 2ten1211@gmail.com
+[2025-07-15T05:43:14.522Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T05:48:07.240Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T05:52:02.987Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T05:52:05.152Z] [huycan2004@gmail.com] [Add Contact] [Failed] Contact 2ten1211@gmail.com already exists.
+[2025-07-15T06:13:31.359Z] [huycan1211@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T06:14:00.291Z] [huycan1211@gmail.com] [Verify OTP] [Failed] Incorrect OTP
+[2025-07-15T06:14:16.751Z] [huycan1211@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T06:14:27.991Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:14:29.669Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:15:22.178Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:15:22.236Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:18:08.271Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:18:08.392Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:20:54.134Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:20:54.182Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:20:54.914Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:20:55.477Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:23:10.942Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:23:10.944Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:23:11.034Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:23:11.628Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:23:37.202Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:23:37.204Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:23:37.265Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:23:37.553Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:31:06.715Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:31:06.835Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:31:07.325Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:31:07.438Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:31:43.066Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:31:43.758Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:31:52.797Z] [huycan1211@gmail.com] [Generate RSA Keys] [Success] RSA key pair generated and saved
+[2025-07-15T06:31:55.418Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T06:31:57.235Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T06:31:57.427Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T06:32:04.904Z] [huycan1211@gmail.com] [Find User Public Key] [Success] Public key found
+[2025-07-15T06:35:33.332Z] [huycan1211@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T06:36:29.466Z] [huycan1211@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T06:36:44.251Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:36:44.473Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:36:46.482Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:36:47.891Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:47:30.977Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:47:33.320Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:47:34.170Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:47:39.491Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:51:02.358Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:51:07.822Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:58:11.272Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:58:14.173Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T06:58:25.224Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:58:26.288Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:58:44.139Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:58:44.326Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T06:59:34.691Z] [huycan1211@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T07:01:17.660Z] [huycan1211@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T07:01:41.698Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:01:42.141Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:10:48.597Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:10:57.800Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:14:30.765Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T07:14:34.231Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:14:35.129Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:14:40.479Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T07:15:08.207Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T07:15:08.867Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:15:08.943Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T07:15:09.870Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T07:15:10.162Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T07:15:16.874Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:15:17.171Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:15:17.698Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:18:57.644Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:18:59.628Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:26:13.321Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T07:26:14.026Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T07:31:35.989Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T07:31:37.153Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T07:31:40.386Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:31:40.494Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:37:54.162Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T07:37:54.779Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T07:38:15.484Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:38:17.669Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:53:32.810Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T07:53:34.846Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:06:38.414Z] [huycan1211@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T08:07:09.347Z] [huycan1211@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T08:07:15.191Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T08:07:15.297Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T08:07:20.699Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T08:07:20.991Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T08:07:36.221Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:07:36.477Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:07:47.708Z] [huycan1211@gmail.com] [Renew RSA Key] [Success] RSA key renewed successfully
+[2025-07-15T08:07:50.361Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:08:01.828Z] [huycan1211@gmail.com] [Renew RSA Key] [Success] RSA key renewed successfully
+[2025-07-15T08:08:02.246Z] [huycan1211@gmail.com] [Renew RSA Key] [Success] RSA key renewed successfully
+[2025-07-15T08:08:04.175Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:08:06.004Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:08:09.568Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:08:09.928Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:08:10.783Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:08:11.446Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:08:45.296Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:08:45.478Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:08:48.516Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:08:48.615Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:09:39.774Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:09:42.133Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:09:42.328Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:09:42.398Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:09:43.649Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:09:43.891Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:16:56.209Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:16:56.211Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:21:13.818Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:21:14.328Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:29:44.669Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:29:46.502Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:31:18.653Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:31:18.938Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:31:19.557Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:31:20.820Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:32:41.069Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:32:41.293Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:34:21.026Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:34:21.089Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:34:55.981Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:34:56.052Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:36:23.669Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:36:23.780Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:37:24.818Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:37:24.885Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:39:07.967Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:39:08.033Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:40:57.790Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:40:57.915Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:41:06.237Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:41:06.495Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:43:38.616Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:48:45.610Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:48:47.126Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:48:50.972Z] [huycan1211@gmail.com] [Renew RSA Key] [Success] RSA key renewed successfully
+[2025-07-15T08:48:54.065Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:52:13.148Z] [huycan1211@gmail.com] [Renew RSA Key] [Success] RSA key renewed successfully
+[2025-07-15T08:52:17.172Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:56:27.227Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:56:27.573Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:57:49.205Z] [huycan1211@gmail.com] [Delete Key] [Success] RSA key deleted successfully
+[2025-07-15T08:57:57.961Z] [huycan1211@gmail.com] [Generate RSA Keys] [Success] RSA key pair generated and saved
+[2025-07-15T08:58:00.927Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:59:28.696Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:59:29.469Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:04:11.926Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:04:12.065Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:04:19.999Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:04:20.426Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:23:29.227Z] [huycan1211@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T09:23:52.881Z] [huycan1211@gmail.com] [Verify OTP] [Failed] Incorrect OTP
+[2025-07-15T09:24:08.704Z] [huycan1211@gmail.com] [Verify OTP] [Failed] Incorrect OTP
+[2025-07-15T09:24:19.706Z] [huycan1211@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T09:24:23.433Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T09:24:24.047Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T09:24:29.366Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T09:24:29.536Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T09:24:30.244Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:24:30.611Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:25:01.174Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:25:08.432Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:25:08.485Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:27:29.685Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:27:52.496Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:27:52.592Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:28:48.341Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:31:34.277Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:32:17.464Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:32:25.149Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:32:25.863Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:32:31.834Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:32:48.789Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:33:00.773Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:33:20.240Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:33:26.137Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:33:31.816Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:33:42.737Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:33:50.363Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:33:59.638Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:34:25.851Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:38:31.008Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:38:50.562Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:38:50.697Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:39:33.278Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:39:49.544Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:39:57.346Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:43:34.524Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:43:35.250Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:43:46.900Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:43:46.962Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:44:45.382Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:44:46.128Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:45:06.406Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:45:06.534Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:45:13.562Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:45:13.644Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:45:24.032Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:45:24.125Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:45:35.792Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:45:37.243Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T09:46:01.832Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T09:46:01.892Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T09:46:05.155Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T09:46:06.742Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T13:22:32.505Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T13:22:32.981Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T13:22:34.232Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T13:22:34.303Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T13:22:39.677Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T13:22:39.948Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T13:23:43.089Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T13:23:43.157Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T13:24:42.656Z] [huycan1211@gmail.com] [Admin - Lock User Account] [Success] Locked user long@gmail.com until Tue Jul 15 2025 20:29:42 GMT+0700 (Indochina Time)
+[2025-07-15T13:24:44.677Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T13:26:45.872Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T13:26:46.082Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T13:28:31.417Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T13:28:31.745Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T13:30:08.442Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T13:30:08.661Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T13:30:23.333Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T13:30:23.398Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T13:30:25.925Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T13:30:25.984Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T13:30:30.001Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T13:30:30.063Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T13:30:32.074Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T13:30:32.078Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T13:30:34.915Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T13:30:34.978Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T13:56:35.608Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T13:56:35.957Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T13:56:36.906Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T13:56:36.910Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:00:50.696Z] [huycan1211@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:01:12.759Z] [huycan1211@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:18:53.494Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:18:53.775Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:20:35.722Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:20:35.723Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:24:14.740Z] [huycan2004@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T14:24:32.051Z] [huycan2004@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T14:24:40.736Z] [huycan2004@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T14:24:41.165Z] [huycan2004@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T14:24:42.218Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:24:42.220Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:24:49.754Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:24:52.438Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:24:55.597Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:25:43.184Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:25:46.190Z] [huycan2004@gmail.com] [Add Contact] [Failed] 
+Invalid `prisma.user.update()` invocation in
+C:\Users\Huy\Music\Dai_hoc\year_3\3rd_term\InfoSec\lab\project01\modules\controllers\userController.js:101:27
+
+   98 }];
+   99 
+  100 // Cập nhật mảng contacts vào database
+→ 101 await prisma.user.update({
+        where: {
+          id: "686a8700e926e3a549f286f8"
+        },
+        data: {
+          contacts: [
+            {
+              email: "2ten1211@gmail.com",
+              addedAt: new Date("2025-07-15T05:43:13.973Z")
+            },
+            {
+              email: "huycan1211@gmail.com",
+              publicKey: "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl6+xggpT7IqBhmJhllPj\ntgSmpu8fggCzWmU5T/Wukq3eV4dQlb3xR5bAHMFlF9eEWq9kQPTWt1prRRlyPjQi\ncrPqtyAnQ12U5pTK/ik7dKp7aKcQUbAdLC44F2zvTImnsPwZUy8GZYZ0CUQtd7Iv\nOEk+inVvHACw8G0Sbr3n9uC1eVUHNcX1G3HuuShsxzzbaIaJlNJ3AFbtUv6/aRWf\nr2z1NpGNhCw6CpJBA3RXq/UUCmskoq8pOQ7fYeRoYNIAOrbKLpZF5UpMUvb0+rvW\ngkT8PIyuqhPc58jvDDl3K5/WfMulRGhuOgGp/KvnoxTjO6SXXaF5gEs/v56tLO2K\nLwIDAQAB\n-----END PUBLIC KEY-----\n",
+              addedAt: new Date("2025-07-15T14:25:46.168Z")
+            }
+          ]
+        }
+      })
+
+Unknown argument `publicKey`. Available options are marked with ?.
+[2025-07-15T14:26:43.879Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:30:09.225Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:30:37.123Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:30:37.125Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:30:52.338Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:31:40.280Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:35:05.211Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:35:15.602Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:35:17.788Z] [huycan2004@gmail.com] [Add Contact] [Failed] Contact 2ten1211@gmail.com already exists.
+[2025-07-15T14:35:21.207Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:35:30.367Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:35:32.408Z] [huycan2004@gmail.com] [Add Contact] [Success] Contact huycan1211@gmail.com added successfully.
+[2025-07-15T14:37:30.991Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:37:31.706Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:37:43.515Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:37:52.921Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:38:03.518Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:38:16.541Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:39:17.082Z] [huycan1211@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T14:40:50.562Z] [huycan1211@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T14:40:58.233Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T14:40:58.461Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T14:44:25.876Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:44:26.008Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:45:44.918Z] [huycan1211@gmail.com] [Admin - Unlock User Account] [Success] Unlocked user long@gmail.com
+[2025-07-15T14:45:44.986Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:45:51.655Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:46:02.854Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:46:02.919Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:46:05.172Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T14:46:05.395Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T14:54:39.625Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:54:39.690Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:55:23.769Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:55:49.967Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:55:50.027Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:56:09.331Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:56:29.204Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:57:34.885Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:58:17.176Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:58:17.238Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:58:43.830Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T14:58:44.051Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T14:59:16.275Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:59:16.340Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:59:18.886Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:59:18.954Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:59:22.010Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:59:25.107Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T14:59:25.172Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T15:00:25.297Z] [huycan1211@gmail.com] [Admin - Lock User Account] [Success] Locked user long@gmail.com until Tue Jul 15 2025 22:05:25 GMT+0700 (Indochina Time)
+[2025-07-15T15:00:25.359Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T15:04:54.637Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T15:04:54.878Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T15:12:48.679Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T15:12:48.735Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T15:17:23.920Z] [huycan1211@gmail.com] [Renew RSA Key] [Success] RSA key renewed successfully
+[2025-07-15T15:17:25.625Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T15:39:17.509Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T15:39:19.073Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T15:39:20.119Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T15:39:21.182Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Invalid email or password.
+[2025-07-15T15:39:22.500Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Too many failed login attempts. Account locked for 5 minutes.
+[2025-07-15T15:39:44.425Z] [huycan2004@gmail.com] [Signin Step 1] [Failed] Account locked for 5 minutes
