@@ -28,18 +28,35 @@ export default function QRCodeGenerator() {
   const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
 
   // State for QR code reading
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [decodedData, setDecodedData] = useState<any | null>(null);
   const [decoding, setDecoding] = useState(false);
   const [decodeError, setDecodeError] = useState<string | null>(null);
+  const [showAddContactButton, setShowAddContactButton] = useState(false);
+  const [contactEmailToAdd, setContactEmailToAdd] = useState<string | null>(null);
+  const [contactPublicKeyToAdd, setContactPublicKeyToAdd] = useState<string | null>(null);
 
   useEffect(() => {
     const generateQrCode = async () => {
       const token = localStorage.getItem("jwtToken");
       if (!token) {
         setError("Authentication token not found. Please sign in again.");
+        setLoading(false);
+        return;
+      }
+
+      // Decode the JWT to get the user's email
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const decodedToken = JSON.parse(window.atob(base64));
+        setCurrentUserEmail(decodedToken.email);
+      } catch (e) {
+        console.error("Error decoding JWT:", e);
+        setError("Failed to decode user information from token.");
         setLoading(false);
         return;
       }
@@ -131,10 +148,65 @@ export default function QRCodeGenerator() {
         data.decodedData.createdAt = formatDate(data.decodedData.createdAt);
       }
       setDecodedData(data.decodedData);
+
+      // Logic để hiển thị nút "Add to Contacts"
+      if (data.decodedData && data.decodedData.email && data.decodedData.publicKey) {
+        if (currentUserEmail && data.decodedData.email !== currentUserEmail) {
+          // Check if contact already exists in the current user's contacts
+          // This would require fetching current user's contacts, which is not done here.
+          // For simplicity, we'll assume it's not a duplicate for now, or handle it in backend.
+          setShowAddContactButton(true);
+          setContactEmailToAdd(data.decodedData.email);
+          setContactPublicKeyToAdd(data.decodedData.publicKey);
+        } else {
+          setShowAddContactButton(false);
+          setContactEmailToAdd(null);
+          setContactPublicKeyToAdd(null);
+        }
+      } else {
+        setShowAddContactButton(false);
+        setContactEmailToAdd(null);
+        setContactPublicKeyToAdd(null);
+      }
+
     } catch (err: any) {
       setDecodeError(err.message || "An unexpected error occurred.");
     } finally {
       setDecoding(false);
+    }
+  };
+
+  const handleAddContact = async () => {
+    if (!contactEmailToAdd || !contactPublicKeyToAdd) return;
+
+    const token = localStorage.getItem("jwtToken");
+    if (!token) {
+      alert("Authentication token not found. Please sign in again.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/users/contacts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ email: contactEmailToAdd, publicKey: contactPublicKeyToAdd }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Contact added successfully!");
+        setShowAddContactButton(false); // Hide button after adding
+        setContactEmailToAdd(null);
+        setContactPublicKeyToAdd(null);
+      } else {
+        alert(data.message || "Failed to add contact.");
+      }
+    } catch (err) {
+      alert("An error occurred while adding contact.");
     }
   };
 
@@ -217,6 +289,17 @@ export default function QRCodeGenerator() {
                   </p>
                 ))}
             </div>
+          </div>
+        )}
+
+        {decodedData && showAddContactButton && (
+          <div className="mt-4">
+            <Button
+              onClick={handleAddContact}
+              className="bg-purple-500 hover:bg-purple-600 active:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
+            >
+              Add to Contacts
+            </Button>
           </div>
         )}
 

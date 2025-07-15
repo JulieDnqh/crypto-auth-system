@@ -61,3 +61,54 @@ exports.findUserPublicKey = async (req, res) => {
         res.status(500).json({ message: 'Internal server error.' });
     }
 };
+
+exports.addContact = async (req, res) => {
+    try {
+        const currentUserId = req.user.userId; // Lấy userId của người dùng hiện tại từ token
+        const { email, publicKey } = req.body; // Lấy email và publicKey của contact từ request body
+
+        if (!email || !publicKey) {
+            return res.status(400).json({ message: 'Email and publicKey are required.' });
+        }
+
+        // Tìm người dùng hiện tại
+        const currentUser = await prisma.user.findUnique({
+            where: { id: currentUserId },
+            select: { id: true, contacts: true } // Chỉ lấy id và contacts
+        });
+
+        if (!currentUser) {
+            log(req.user.email, 'Add Contact', 'Failed', 'Current user not found.');
+            return res.status(404).json({ message: 'Current user not found.' });
+        }
+
+        // Kiểm tra xem contact đã tồn tại chưa
+        const contactExists = currentUser.contacts.some(contact => contact.email === email);
+
+        if (contactExists) {
+            log(req.user.email, 'Add Contact', 'Failed', `Contact ${email} already exists.`);
+            return res.status(409).json({ message: 'Contact already exists.' });
+        }
+
+        // Thêm contact mới vào mảng contacts
+        const updatedContacts = [...currentUser.contacts, {
+            email: email,
+            publicKey: publicKey,
+            addedAt: new Date(),
+        }];
+
+        // Cập nhật mảng contacts vào database
+        await prisma.user.update({
+            where: { id: currentUserId },
+            data: { contacts: updatedContacts }
+        });
+
+        log(req.user.email, 'Add Contact', 'Success', `Contact ${email} added successfully.`);
+        res.status(200).json({ message: 'Contact added successfully.' });
+
+    } catch (error) {
+        console.error("Error adding contact:", error);
+        log(req.user.email, 'Add Contact', 'Failed', error.message);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+};

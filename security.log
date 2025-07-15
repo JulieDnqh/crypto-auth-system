@@ -1,0 +1,16 @@
+[2025-07-15T04:41:17.847Z] [2ten1211@gmail.com] [Signup] [Success] User created successfully
+[2025-07-15T04:42:18.639Z] [2ten1211@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T04:42:33.459Z] [2ten1211@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T04:42:49.630Z] [2ten1211@gmail.com] [Generate RSA Keys] [Success] RSA key pair generated and saved
+[2025-07-15T04:42:51.715Z] [2ten1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T04:42:53.480Z] [2ten1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T04:42:53.791Z] [2ten1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T05:42:43.047Z] [huycan2004@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T05:42:57.385Z] [huycan2004@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T05:43:04.049Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T05:43:05.000Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T05:43:14.521Z] [huycan2004@gmail.com] [Add Contact from QR] [Success] Added new contact: 2ten1211@gmail.com
+[2025-07-15T05:43:14.522Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T05:48:07.240Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T05:52:02.987Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T05:52:05.152Z] [huycan2004@gmail.com] [Add Contact] [Failed] Contact 2ten1211@gmail.com already exists.
