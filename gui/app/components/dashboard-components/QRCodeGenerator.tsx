@@ -38,6 +38,7 @@ export default function QRCodeGenerator() {
   const [showAddContactButton, setShowAddContactButton] = useState(false);
   const [contactEmailToAdd, setContactEmailToAdd] = useState<string | null>(null);
   const [contactPublicKeyToAdd, setContactPublicKeyToAdd] = useState<string | null>(null);
+  
 
   useEffect(() => {
     const generateQrCode = async () => {
@@ -158,6 +159,7 @@ export default function QRCodeGenerator() {
           setShowAddContactButton(true);
           setContactEmailToAdd(data.decodedData.email);
           setContactPublicKeyToAdd(data.decodedData.publicKey);
+          
         } else {
           setShowAddContactButton(false);
           setContactEmailToAdd(null);
@@ -291,6 +293,8 @@ export default function QRCodeGenerator() {
             </div>
           </div>
         )}
+
+        
 
         {decodedData && showAddContactButton && (
           <div className="mt-4">

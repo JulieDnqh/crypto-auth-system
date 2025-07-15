@@ -65,10 +65,10 @@ exports.findUserPublicKey = async (req, res) => {
 exports.addContact = async (req, res) => {
     try {
         const currentUserId = req.user.userId; // Lấy userId của người dùng hiện tại từ token
-        const { email, publicKey } = req.body; // Lấy email và publicKey của contact từ request body
+        const { email } = req.body; // Lấy email của contact từ request body
 
-        if (!email || !publicKey) {
-            return res.status(400).json({ message: 'Email and publicKey are required.' });
+        if (!email) {
+            return res.status(400).json({ message: 'Email is required.' });
         }
 
         // Tìm người dùng hiện tại
@@ -93,7 +93,6 @@ exports.addContact = async (req, res) => {
         // Thêm contact mới vào mảng contacts
         const updatedContacts = [...currentUser.contacts, {
             email: email,
-            publicKey: publicKey,
             addedAt: new Date(),
         }];
 

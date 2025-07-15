@@ -249,3 +249,62 @@
 [2025-07-15T13:30:32.078Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
 [2025-07-15T13:30:34.915Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
 [2025-07-15T13:30:34.978Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T13:56:35.608Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T13:56:35.957Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T13:56:36.906Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T13:56:36.910Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:00:50.696Z] [huycan1211@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:01:12.759Z] [huycan1211@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:18:53.494Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:18:53.775Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:20:35.722Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:20:35.723Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:24:14.740Z] [huycan2004@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T14:24:32.051Z] [huycan2004@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T14:24:40.736Z] [huycan2004@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T14:24:41.165Z] [huycan2004@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T14:24:42.218Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:24:42.220Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:24:49.754Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:24:52.438Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:24:55.597Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:25:43.184Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:25:46.190Z] [huycan2004@gmail.com] [Add Contact] [Failed] 
+Invalid `prisma.user.update()` invocation in
+C:\Users\Huy\Music\Dai_hoc\year_3\3rd_term\InfoSec\lab\project01\modules\controllers\userController.js:101:27
+
+   98 }];
+   99 
+  100 // Cập nhật mảng contacts vào database
+→ 101 await prisma.user.update({
+        where: {
+          id: "686a8700e926e3a549f286f8"
+        },
+        data: {
+          contacts: [
+            {
+              email: "2ten1211@gmail.com",
+              addedAt: new Date("2025-07-15T05:43:13.973Z")
+            },
+            {
+              email: "huycan1211@gmail.com",
+              publicKey: "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl6+xggpT7IqBhmJhllPj\ntgSmpu8fggCzWmU5T/Wukq3eV4dQlb3xR5bAHMFlF9eEWq9kQPTWt1prRRlyPjQi\ncrPqtyAnQ12U5pTK/ik7dKp7aKcQUbAdLC44F2zvTImnsPwZUy8GZYZ0CUQtd7Iv\nOEk+inVvHACw8G0Sbr3n9uC1eVUHNcX1G3HuuShsxzzbaIaJlNJ3AFbtUv6/aRWf\nr2z1NpGNhCw6CpJBA3RXq/UUCmskoq8pOQ7fYeRoYNIAOrbKLpZF5UpMUvb0+rvW\ngkT8PIyuqhPc58jvDDl3K5/WfMulRGhuOgGp/KvnoxTjO6SXXaF5gEs/v56tLO2K\nLwIDAQAB\n-----END PUBLIC KEY-----\n",
+              addedAt: new Date("2025-07-15T14:25:46.168Z")
+            }
+          ]
+        }
+      })
+
+Unknown argument `publicKey`. Available options are marked with ?.
+[2025-07-15T14:26:43.879Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:30:09.225Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:30:37.123Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:30:37.125Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:30:52.338Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:31:40.280Z] [huycan2004@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T14:35:05.211Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:35:15.602Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:35:17.788Z] [huycan2004@gmail.com] [Add Contact] [Failed] Contact 2ten1211@gmail.com already exists.
+[2025-07-15T14:35:21.207Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:35:30.367Z] [huycan2004@gmail.com] [Decode QR Code] [Success] QR code decoded successfully
+[2025-07-15T14:35:32.408Z] [huycan2004@gmail.com] [Add Contact] [Success] Contact huycan1211@gmail.com added successfully.
