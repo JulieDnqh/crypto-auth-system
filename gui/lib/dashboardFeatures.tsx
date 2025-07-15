@@ -9,6 +9,7 @@ import AccountManagement from "@/app/components/dashboard-components/AccountMana
 import AdminUserManagement from "@/app/components/dashboard-components/AdminUserManagement";
 import SearchPublicKey from "@/app/components/dashboard-components/SearchPublicKey";
 import QRCodeGenerator from "@/app/components/dashboard-components/QRCodeGenerator"; // Import the new component
+import FileProcessing from "@/app/components/dashboard-components/FileProcessing";
 import AdminLogs from "@/app/components/dashboard-components/AdminLogs"; // Import AdminLogs
 
 // --- DATA STRUCTURE DEFINITIONS ---
@@ -46,6 +47,14 @@ export const commonFeaturesConfig: FeatureMenu[] = [
       { key: "search-public", label: "Search Public Key", path: "search-public-key" },
     ],
   },
+  {
+    name: "File Processing",
+    key: "files",
+    icon: <FileText className="w-5 h-5" />,
+    items: [
+      { key: "file-proc", label: "Chunking File and Processing", path: "file-processing" },
+    ],
+  },
   // ... other menus
 ];
 
@@ -74,6 +83,7 @@ export const featureComponents: FeatureComponentMap = {
   "account-management": AccountManagement,
   "search-public-key": SearchPublicKey,
   "qr-code-generator": QRCodeGenerator,
+  "file-processing": FileProcessing,
   "admin-account-management": AdminUserManagement, // Re-use for admin account management
   "admin-view-logs": AdminLogs,
 };

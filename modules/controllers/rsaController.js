@@ -5,24 +5,6 @@ const bcrypt = require('bcryptjs');
 const { encryptPrivateKey, decryptPrivateKey } = require('../utils/cryptoHelpers');
 const log = require('../utils/logger');
 
-// Hàm helper để mã hóa private key
-// const encryptPrivateKey = (privateKey, passphrase) => {
-//     const salt = crypto.randomBytes(16); // Tạo salt ngẫu nhiên
-//     // Dùng PBKDF2 để tạo key 256-bit (32-byte) an toàn từ passphrase
-//     const key = crypto.pbkdf2Sync(passphrase, salt, 100000, 32, 'sha512');
-//     const iv = crypto.randomBytes(16); // Tạo IV ngẫu nhiên
-
-//     const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
-//     let encrypted = cipher.update(privateKey, 'utf8', 'hex');
-//     encrypted += cipher.final('hex');
-
-//     return {
-//         encryptedData: encrypted,
-//         salt: salt.toString('hex'),
-//         iv: iv.toString('hex')
-//     };
-// };
-
 // Controller để tạo khóa
 exports.generateKeys = async (req, res) => {
     try {

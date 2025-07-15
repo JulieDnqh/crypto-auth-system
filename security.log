@@ -47,3 +47,9 @@
 [2025-07-15T14:57:49.634Z] [dnqh04@gmail.com] [Admin - Get All Users] [Success] Fetched all users
 [2025-07-15T14:57:53.264Z] [dnqh04@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
 [2025-07-15T14:57:53.484Z] [dnqh04@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T15:11:02.964Z] [dnqhjulie@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T15:11:39.889Z] [dnqhjulie@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T15:11:58.389Z] [dnqhjulie@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T15:11:58.614Z] [dnqhjulie@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T15:12:00.234Z] [dnqhjulie@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T15:12:00.294Z] [dnqhjulie@gmail.com] [Get Key Status] [Success] Key status retrieved
