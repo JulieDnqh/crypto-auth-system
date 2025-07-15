@@ -6,6 +6,7 @@ import { User, Key, FileText, Shield } from "lucide-react";
 import KeyManagement from "@/app/components/dashboard-components/KeyManagement";
 
 import AccountManagement from "@/app/components/dashboard-components/AccountManagement";
+import AdminUserManagement from "@/app/components/dashboard-components/AdminUserManagement";
 import SearchPublicKey from "@/app/components/dashboard-components/SearchPublicKey";
 import QRCodeGenerator from "@/app/components/dashboard-components/QRCodeGenerator"; // Import the new component
 import AdminLogs from "@/app/components/dashboard-components/AdminLogs"; // Import AdminLogs
@@ -73,6 +74,6 @@ export const featureComponents: FeatureComponentMap = {
   "account-management": AccountManagement,
   "search-public-key": SearchPublicKey,
   "qr-code-generator": QRCodeGenerator,
-  "admin-account-management": AccountManagement, // Re-use for admin account management
+  "admin-account-management": AdminUserManagement, // Re-use for admin account management
   "admin-view-logs": AdminLogs,
 };
