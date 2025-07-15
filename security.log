@@ -94,3 +94,35 @@
 [2025-07-15T07:37:54.779Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
 [2025-07-15T07:38:15.484Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
 [2025-07-15T07:38:17.669Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T07:53:32.810Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T07:53:34.846Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:06:38.414Z] [huycan1211@gmail.com] [Signin Step 1] [Success] OTP sent
+[2025-07-15T08:07:09.347Z] [huycan1211@gmail.com] [Verify OTP] [Success] OTP verified successfully
+[2025-07-15T08:07:15.191Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T08:07:15.297Z] [huycan1211@gmail.com] [Admin - Get All Users] [Success] Fetched all users
+[2025-07-15T08:07:20.699Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T08:07:20.991Z] [huycan1211@gmail.com] [Admin - Get All Logs] [Success] Fetched all logs
+[2025-07-15T08:07:36.221Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:07:36.477Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:07:47.708Z] [huycan1211@gmail.com] [Renew RSA Key] [Success] RSA key renewed successfully
+[2025-07-15T08:07:50.361Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:08:01.828Z] [huycan1211@gmail.com] [Renew RSA Key] [Success] RSA key renewed successfully
+[2025-07-15T08:08:02.246Z] [huycan1211@gmail.com] [Renew RSA Key] [Success] RSA key renewed successfully
+[2025-07-15T08:08:04.175Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:08:06.004Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:08:09.568Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:08:09.928Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:08:10.783Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:08:11.446Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:08:45.296Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:08:45.478Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:08:48.516Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:08:48.615Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:09:39.774Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:09:42.133Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:09:42.328Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:09:42.398Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:09:43.649Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:09:43.891Z] [huycan1211@gmail.com] [Get Key Status] [Success] Key status retrieved
+[2025-07-15T08:16:56.209Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully
+[2025-07-15T08:16:56.211Z] [huycan1211@gmail.com] [Generate QR Code] [Success] QR code generated successfully

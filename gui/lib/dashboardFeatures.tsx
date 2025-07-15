@@ -3,7 +3,7 @@
 import { User, Key, FileText, Shield } from "lucide-react";
 
 // Import các component tính năng của bạn
-import RSAPersonalKeyManagement from "@/app/components/dashboard-components/KeyManagement";
+
 import AccountManagement from "@/app/components/dashboard-components/AccountManagement";
 import SearchPublicKey from "@/app/components/dashboard-components/SearchPublicKey";
 import QRCodeGenerator from "@/app/components/dashboard-components/QRCodeGenerator"; // Import the new component
@@ -68,7 +68,6 @@ type FeatureComponentMap = {
 
 // Object map
 export const featureComponents: FeatureComponentMap = {
-  "rsa-personal-key": RSAPersonalKeyManagement,
   "account-management": AccountManagement,
   "search-public-key": SearchPublicKey,
   "qr-code-generator": QRCodeGenerator,
