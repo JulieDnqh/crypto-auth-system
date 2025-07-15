@@ -9,7 +9,6 @@ datasource db {
 
 type Contact {
   email     String
-  publicKey String
   addedAt   DateTime @default(now())
 }
 
